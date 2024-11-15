@@ -1818,6 +1818,34 @@ FeatsList["winged"] = {
 	}
 };
 
+// * Chapter 4 feats
+
+FeatsList["battle adept"] = {
+    name : "Battle Adept",
+    source : ["VSoS", 282],
+    calculate : "event.value = 'I learn two maneuvers of my choice from those available to the Captain class or Grey Watchman subclass of the Warden class (2nd page \"Choose Feature\" button). The saving throw DC for this is ' + (8 + Number(How('Proficiency Bonus')) + Math.max(Number(What('Str Mod')), Number(What('Dex Mod')))) + ' (8 + proficiency bonus + Str/Dex mod). I gain one battle die (d6), which I regain when I finish a short rest or roll initiative.';",
+    description : "",
+    descriptionFull : "",
+    // due to limitations, I have to do both separately.
+    bonusClassExtrachoices : [{
+        "class" : "captain",
+        feature : "war tactics",
+        bonus : 2
+    }, {
+        "class" : "warden",
+        "subclass" : "warden-grey watchman",
+        "feature" : "subclassfeature3",
+        "bonus" : 2
+    }],
+	extraLimitedFeatures : [{
+		name : "Battle Dice",
+		usages : 1,
+        additional : 'd6',
+		recovery : "short rest",
+        addToExisting : true
+	}]
+};
+
 // ! This section adds classes
 
 // * Alchemist class
@@ -5575,6 +5603,8 @@ ClassList["captain"] = {
             action: [["bonus action", "Brace"],
                         ["bonus action", "Rally"],
                         ["bonus action", "Staggering Strike"]],
+            extrachoices : ["Brace", "Rally", "Staggering Strike (Captain)"],
+            choicesNotInMenu : true,
             "brace" : {
                 name: "Brace",
                 source: ["VSoS", 48],
@@ -5588,7 +5618,7 @@ ClassList["captain"] = {
                                 "\n    me that can see or hear me. That ally regains hit points equal to the number rolled + my"+
                                 "\n    Charisma modifier. I can't use this ability to heal a creature that has 0 hit points."
             },
-            "staggering strike" : {
+            "staggering strike (captain)" : {
                 name: "Staggering Strike",
                 source: ["VSoS", 48],
                 description: "\n    As a bonus action, when I make a weapon attack against a Large or smaller creature, I can"+
@@ -5600,7 +5630,7 @@ ClassList["captain"] = {
             }, {
                 extrachoice: "rally"
             }, {
-                extrachoice: "staggering strike"
+                extrachoice: "staggering strike (captain)"
             }],
         },
         "blitz" : {
@@ -5710,7 +5740,7 @@ AddSubClass("captain", "dragon",{
 			additional: levels.map(function (n) { 
 				return n < 3 ? "" : n < 6 ? "d8" : n < 10 ? "d8" : n < 14 ? "d10" : n < 18 ? "d10" : "d12";
 			}),
-			recovery : "SR/Init",
+			recovery : "short rest",
 			limfeaAddToExisting : true,			
 		},
 		"subclassfeature3.1" : {
@@ -22081,17 +22111,17 @@ ClassList["gunslinger"] = {
                 name: "Akimbo Fighting Style",
                 source: ["VSoS", 92],
                 description: desc([
-                    "I don't take the -2 damage penalty of offhand firearm attacks when two-weapon fighting.",
+                    "I don't take the -2 damage penalty of off-hand firearm attacks when two-weapon fighting.",
                 ]),
                 calcChanges: {
                     atkAdd:[
                         function (fields, v){
-                            if (/[, ]*offhand \(\-2\)/i.test(fields.Description)){
-                                fields.Description = fields.Description.replace(/[, ]*offhand \(\-2\)/i, "");
+                            if (/^(?!.*(spell|cantrip))(?=.*(off.{0,3}hand|secondary))(?=.*\-\d+\s?dmg)(?=.*\(min\.\s?1\)).*$/i.test(fields.Description)){
+                                fields.Description = fields.Description.replace(/^(?=.*\-\d+\s?dmg)(?=.*\(min\.\s?1\)).*$/i, "");
                                 fields.Description_Tooltip = fields.Description_Tooltip.replace(/When you engage in two-weapon fighting with two light firearms, you subtract 2 from the damage roll of the bonus attack, to a minimum of 1 damage./, "");
                             }
                         },
-                        "I don't take the -2 damage penalty of offhand firearm attacks when two-weapon fighting.",
+                        "I don't take the -2 damage penalty of off-hand firearm attacks when two-weapon fighting.",
                         500
                     ]
                 }
@@ -26586,11 +26616,14 @@ AddSubClass("warden", "grey watchman", {
                 " gain more at higher levels. Once per turn, I can perform a maneuver (see page 3 notes)." +
                 " My save for my maneuvers is 8 + Prof. Bonus + Str/Dex (my choice)"
 			]),
+            limfeaname : "Battle Dice",
 			recovery : "short rest",
 			usages : [0, 0, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4],
 			additional : levels.map(function (n) {
 				return n < 3 ? "" : n < 13 ? "d8" : n < 19 ? "d10" : "d10";
 			}),
+            extrachoices : ["Bull Rush", "Bulwark", "Cleave", "Heel-Cutter", "Reckless Assault", "Staggering Strike (Warden)"],
+            choicesNotInMenu : true,
             "bull rush" : {
                 name : "Bull Rush",
                 extraname : "Battle Tactics: Maneuvers",
@@ -26643,7 +26676,7 @@ AddSubClass("warden", "grey watchman", {
                     " the start of my next turn."
                 ])
             },
-            "staggering strike" : {
+            "staggering strike (warden)" : {
                 name : "Stargering Strike",
                 extraname : "Battle Tactics: Maneuvers",
                 source : ["VSoS", 151],
@@ -26665,7 +26698,7 @@ AddSubClass("warden", "grey watchman", {
             }, {
                 extrachoice : "reckless assault"
             }, {
-                extrachoice : "staggering strike"
+                extrachoice : "staggering strike (warden)"
             }]
 		},
         "subclassfeature3.1" : {
@@ -28467,7 +28500,7 @@ ClassList["warmage"] = {
     spellcastingFactor : 3, //when multiclassing, use 1/3 factor
     spellcastingKnown : {
         cantrips : [4,4,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,10],
-		spells : [0]
+		spells : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     },
 	spellcastingList : {
 		"class" : "warmage",
@@ -28644,7 +28677,7 @@ ClassList["warmage"] = {
 			"striker" : {
 				name : "Arcane Striker Fighting Style",
 				description : desc([
-                    "When I exceed a target's AC by 5>, or score a critical hit, wtih a melee atk cantrip",
+                    "When I exceed a target's AC by \u22655, or score a critical hit, with a melee atk cantrip",
                     "I can add my Prof. Bonus to the damage roll"
                 ])
 			}
@@ -28667,7 +28700,7 @@ ClassList["warmage"] = {
 							var lvl = classes.known.warmage.level;
 							var extraDie = lvl < 5 ? 0 : lvl < 11 ? 1 : lvl < 17 ? 2 : 3; //The amount of die added based on level
 							var currentDieSize = parseInt(fields.Damage_Die.split('d')[1]);
-							fields.Description += (fields.Description ? '; ' : '+ ') + extraDie + 'd' + currentDieSize + '; Once per turn +' + What('Int Mod') + ' dmg';
+							fields.Description += (fields.Description ? '; ' : '+ ') + 'Once per turn ' + What('Int Mod') + (extraDie ? ' and +' + extraDie + 'd' + currentDieSize: "") + ' dmg';
 						}
 					}
 				]
@@ -28762,6 +28795,7 @@ ClassList["warmage"] = {
 				description : desc([
 					"When wearing no armor, and no shield, my AC equals to 10 + Dex mod + Int mod"
 				]),
+                prereqeval : function(v) { return (/\bpawns|rooks\b/).test(classes.known.warmage.subclass); },
 				armorOptions : [{
 					regExpSearch : /^(?=.*cloak)(?=.*feathers).*$/i,
 					name : "Cloak of Feathers",
@@ -28864,8 +28898,12 @@ ClassList["warmage"] = {
 				calcChanges : {
 					atkAdd : [
 						function(fields, v) { 
-							if(v.thisWeapon[3] && SpellsList[v.thisWeapon[3]].level === 0 && v.thisWeapon[4].indexOf("warmage") !== 1 && (/\d+ ?(f.{0,2}t|m)/i.test(fields.Range)) && fields.Range.match(/\d+([.,]\d+)?/g) >= 5) {
+							if(v.thisWeapon[3] && SpellsList[v.thisWeapon[3]].level === 0 && v.thisWeapon[4].indexOf("warmage") !== 1 && (((/\d+ ?(f.{0,2}t|m)/i.test(fields.Range)) && fields.Range.match(/\d+([.,]\d+)?/g) >= 5) || /melee/i.test(fields.Range))) {
 								var rngNum = fields.Range.match(/\d+([.,]\d+)?/g);
+                                if(/melee/i.test(fields.Range) && !rngNum) {
+                                    fields.Range = 'Melee (10 ft)';
+                                    return;
+                                }
 								var oChar = fields.Range.split(RegExp(rngNum.join('|')));
 								fields.Range = '';
 								rngNum.forEach(function (dR, idx) {
@@ -28940,6 +28978,10 @@ ClassList["warmage"] = {
 						function(fields, v, output) {  
 							if( !v.isDC && v.isSpell && v.thisWeapon[3] && SpellsList[v.thisWeapon[3]].level === 0 && v.thisWeapon[4].indexOf('warmage') !== 1 && ((/melee/i).test(fields.description) || (/melee/).test(fields.Range))) { 
 								var sRange = fields.Range.match(/\d+([.,]\d+)?/g);  // Handles special cases like thorn whip or other 'ranged' melee spells
+                                if (/melee/i.test(fields.Range) && !sRange) {
+                                    fields.Range = "Melee (15 ft)";
+                                    return;
+                                }
 								var oChar = fields.Range.split(RegExp(sRange.join('|')));
 								fields.Range = '';
 								sRange.forEach(function (dR, idx) {
@@ -29255,7 +29297,7 @@ ClassList["warmage"] = {
 				name : "Signature Focus", 
 				source : ["VSoS", 164],
 				description : desc([
-                    "On a long rest, I can place a sigil on a simple weapon; it becomes my focus",
+                    "On a long rest, I can place a sigil on a simple or martial wea; it becomes my focus",
                     "It's considered magical and gain the following benefits until I use this trick again",
 					"\u2022 As a bonus action, I can call it to my hand, as long as its on the same plane of existence",
 					"\u2022 I use my Int mod instead of Str or Dex to atk and dmg rolls",
@@ -29267,7 +29309,7 @@ ClassList["warmage"] = {
 					atkAdd : [
 						function (fields, v) {
 							//not a spell; can include signature, focus, or sigil to help sheet automate, must be a simple weapon, changes dex/str to int if applicable.
-							if (!v.isSpell && ((/\b(signature|focus|sigil)\b/i).test(v.WeaponTextName) && (/simple/i).test(v.theWea.type)) && (fields.Mod === 1 || fields.Mod === 2) && What('Int Mod') > What(AbilityScores.abbreviations[fields.Mod - 1] + ' Mod')) {
+							if (!v.isSpell && ((/\b(signature|focus|sigil)\b/i).test(v.WeaponTextName) && (/(simple|martial)/i).test(v.theWea.type)) && (fields.Mod === 1 || fields.Mod === 2) && What('Int Mod') > What(AbilityScores.abbreviations[fields.Mod - 1] + ' Mod')) {
 								fields.Mod = 4;
 							}
 						},
@@ -29277,7 +29319,7 @@ ClassList["warmage"] = {
 				},
                 limfeaname : "Focus Charges",
 				usages : "Int mod per ",
-                usagescalc : "event.value = 'What('Int Mod')'",
+                usagescalc : "event.value = Math.max(What('Int Mod'), 1);",
 				recovery : "long rest"
 			},
 			"silent cantrip" : {
@@ -29827,12 +29869,11 @@ AddSubClass("warmage", "house of knights", {
 				name : "Mystical Weapon",
 				spells : ["force weapon"],
 				selection : ["force weapon"],
-				firstCol : "atwill"
 			}],
             calcChanges : {
                 atkAdd : [
                     function(fields, v) { 
-                        if(/force ?(weapon)?/i.test(fields.WeaponTextName) && !/\bforce weapon\b/.test(SpellsList[v.thisWeapon[3]].name)) {
+                        if(!v.isSpell && ((/\bforce\b/i).test(v.WeaponTextName) && (/(simple|martial)/i).test(v.theWea.type))) {
                             fields.Damage_Type = "Force"
                         }
                     }
@@ -30201,6 +30242,928 @@ AddSubClass("warmage", "house of rooks", {
 			}]
 		}
 	}
+});
+
+// ! Subclasses
+
+// * Barbarian subclasses
+AddSubClass("barbarian", "colossus", {
+    regExpSearch : /^((?=.*(marauder|barbarian|viking|(norse|tribes?|clans?)(wo)?m(a|e)n))|((?=.*(warrior|fighter))(?=.*(feral|tribal))))(?=.*colossus).*$/i,
+    subname : "Path of the Colossus",
+    source : [["VSoS", 192]],
+    features : {
+        "subclassfeature3" : {
+            name : "Larger Than Life",
+            source : ["VSoS", 192],
+            minlevel : 3,
+            description : desc([
+                "When raging I gain the following:",
+                "\u2022 My size doubles in all dimensions and weight is multipled by 8",
+                "  If there's not enough room, I attain the max possible size in the available space",
+                "\u2022 My size increases by 1, but doesn't stack with spells such as enlarge/reduce",
+                "\u2022 My wea(s) also grow, dealing an extra 1d4 dmg",
+                "\u2022 As an action, I can swing in a 15 ft line, rolling a separate atk roll for each crea hit",
+            ]),
+            action : ["action", " (15-ft line)"],
+            calcChanges : {
+                atkAdd : [
+                    function(fields, v) { 
+                        if(v.isMeleeWeapon && classes.known.barbarian && classes.known.barbarian.level > 2 && (/\brage\b/i).test(v.WeaponTextName)) {
+                            fields.Description = (fields.Description ? "; " : "") + "+1d4 extra dmg"  
+                        }
+                    },
+                    "If I add \"Rage\" to the name of a weapon, I can treat it as a rage weapon and add +1d4 extra damage to it"
+                ],
+            }
+        },
+        "subclassfeature6" : {
+            name : "Imposing Presence",
+            source : ["VSoS", 193],
+            minlevel : 6,
+            description : desc([
+                "Ranged line of sight effects treats targets behind me as \u00BE cover",
+                "While raging, this becomes total cover"
+            ])
+        },
+        "subclassfeature10" : {
+            name : "Boulder Throw",
+            source : ["VSoS", 193],
+            minlevel : 10,
+            description : desc([
+                "I can throw boulders or other suitably large objects as weapons",
+                "Such weapons are considered proficient and have the following properties:",
+                "\u2022 Two-handed, heavy, thrown",
+                "\u2022 Range 30/60ft",
+                "\u2022 2d8 Bludg. dmg",
+                "I may only throw a boulder once per turn"
+            ]),
+            usages : 1,
+            recovery : "Turn",
+            weaponOptions : [{
+                name : "Boulder Throw",
+                regExpSearch : /^(?=.*boulder)(?=.*throw).*$/i,
+                source : ["VSoS", 193],
+                type : "AlwaysProf",
+                ability : 1,
+                abilitytodamage : false,
+                damage : [2,8, "bludgeoning"],
+                range : "Range, 30/60ft",
+                description : "Two-handed, heavy, thrown",
+                selectNow : true
+            }]
+        },
+        "subclassfeature14" : {
+            // TODO: implement changeeval w/ choices.
+            name : "Colossal Strength",
+            source : ["VSoS", 193],
+            minlevel : 14,
+            choices : ["scoresmax22", "scoresmax26"],
+            choicesNotInMenu : true,
+            // changeeval : function(lvl,chc) {
+            //     if(lvl < 14) return;
+            // },
+            "scoresmax22" : {
+                name : "Strength Max Increase (22)",
+                extraname : "Path of the Colossus 14",
+                source : ["VSoS", 193],
+                description : desc([
+                    "My Strength max increases to 22"
+                ]),
+                scoresMaximum : [22,0,0,0,0,0]
+            },
+            "scoresmax26" : {
+                name : "Strength Max Increase (26)",
+                extraname : "Path of the Colossus 14",
+                source : ["VSoS", 193],
+                description : desc([
+                    "My Strength max increases to 26"
+                ]),
+                scoresMaximum : [26,0,0,0,0,0]
+            },
+            description : levels.map(function(n) {
+                if(n<14) return ""
+                var description = desc([
+                    "I gain a +2 to Strength and my Str score max is now a 22",
+                ]);
+                
+                if(n>19) {
+                    description += desc([
+                        "At 20th level, I gain a +2 to Strength and my Str score max becomes a 26 instead of 22"
+                    ])
+                }
+                return description; 
+            }),
+            scores : [2,0,0,0,0,0]
+        }
+    }
+});
+
+AddSubClass("barbarian", "fin", {
+    subname : "Path of the Fin",
+    source : ["VSoS", 193],
+    features : {
+        "subclassfeature3" : {
+            name : "Aquatic",
+            source : ["VSoS", 193],
+            minlevel : 3,
+            description : desc([
+                "I can breathe underwater and have a swim speed equal to my walk speed",
+                "If I'm swimming, my rage can't end early unless I choose to do so"
+            ]),
+            speed : {
+                swim : { spd : "walk", enc : "walk" }
+            },
+        },
+        "subclassfeature3.1" : {
+            name : "Feeding Frenzy",
+            source : ["VSoS", 193],
+            minlevel : 3,
+            description : levels.map(function(n) {
+                if(n<3) return ""
+                var description = desc([
+                    "I gain razor sharp teeth to make a bite attack with while raging",
+                    "I use this to make unarmed atks with; If I hit a crea w/in 5ft with a",
+                    "melee atk, I can use my bns action to make a bite atk against it",
+                    "This atk has adv. if the crea has \u2264\u008Bhp; I can do this",
+                    "a number of times equal to my Con mod per long rest (min. of 1)"
+                ])
+                
+                if(n>5) {
+                    description += desc([
+                        "At 6th level, my bite is considered magical for overcoming magic resistance"
+                    ])
+                }
+                return description; 
+            }),
+            usages : "Con mod per ",
+            usagescalc : "event.value = Math.max(1, What('Con Mod'));",
+            recovery : "long rest",
+            weaponOptions : [{
+                name : "Bite",
+                regExpSearch : /^(?=.*bite).*$/i,
+                source : ["VSoS", 193],
+                baseWeapon : "unarmed strike",
+                damage : [1,8,"Piercing"],
+                selectNow : true
+            }],
+            calcChanges : {
+                atkAdd : [
+                    function (fields, v) {
+                        if(/bite/i.test(v.WeaponTextName)) {
+                            fields.Description = (fields.Description ? "; " : "") + "Counts as magical";
+                        }
+                    }
+                ]
+            }
+        },
+        "subclassfeature6" : {
+            name : "Blood Sense",
+            source : ["VSoS", 193],
+            minlevel : 6,
+            description : desc([
+                "I gain adv. on all Investigation and Perception checks made with smell",
+                "I can automatically track a living crea whose scent I'm familiar with",
+                "as long as the trail is less than a week old; I can spend 1 min to",
+                "detect the scents of all living crea w/in 100 ft, or 1 mi. in water"
+            ]),
+            vision : [["Adv. on Perception checks that rely on smell", 0]],
+        },
+        "subclassfeature10" : {
+            name : "Mako",
+            source : ["VSoS", 193],
+            minlevel : 10,
+            description : desc([
+                "My bite atk dmg die increases from d8 to d10",
+                "Once per turn when I hit a crea with my bite, it must make a Dex save",
+                "On a fail, the tgt is knocked prone or grappled, my choice",
+                "The tgt has disadv. if I'm swimming"
+            ]),
+            calcChanges : {
+                atkAdd : [
+                    function (fields, v) {
+                        if(/bite/i.test(v.WeaponTextName)) {
+                            fields.Damage_Die = 'd10';
+                            fields.Description = (fields.Description ? "; " : "") + "Once per turn Dex save or prone/grappled; Disadv. if I'm swimming";
+                        }
+                    }
+                ]
+            }
+        },
+        "subclassfeature14" : {
+            name : "Tsunami",
+            source : ["VSoS", 193],
+            minlevel : 14,
+            description : desc([
+                "When raging, I can conjure a magical wave of salt water",
+                "The wave is up to 15-ft wide and 15-ft tall and moves w/ me",
+                "If a crea is caught in the wave, it's forced to swim and hold its breath",
+                "until it leaves wave's area or the wave moves away from it",
+                "The wave extinguishes all unprotected flames, and lasts for 1 min"
+            ]),
+            usages : 1,
+            recovery : "short rest",
+        }
+    }
+});
+
+// TODO: Below
+// AddSubClass("barbarian", "heavy metal", { 
+//     subname : "Path of Heavy Metal",
+//     source : ["VSoS", 194],
+//     features : {
+//         "subclassfeature3" : {
+//             name : "Bonus Proficiencies",
+//             source : ["VSoS", 194],
+//             minlevel : 3,
+//             description : desc([
+//                 "I gain proficiency with 3 musical instruments of my choice"
+//             ]),
+//             toolProfs : [["Any Musical instrument", 3]],
+//         },
+//         "subclassfeature3.1" : {
+//             name : "Heavy Metal Axe",
+//             source : ["VSoS", 194],
+//             minlevel : 3,
+//             description : desc([
+//                 "I can spend 8 hrs to convert any two-handed weapon into an instrument",
+//                 "Only I can play said instrument, and retains all of it's properties",
+//                 "I can have a number of instruments equal to my Prof Bonus"
+//             ])
+//         }
+//     }
+// });
+
+// * Monk subclasses
+AddSubClass("monk", "way of the bow", {
+    regExpSearch : /^(?=.*bow)((?=.*(monk|monastic))|(((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior)))).*$/i,
+    subname : "Way of the Bow",
+    source : [["VSoS", 222]],
+    features : {
+        "subclassfeature3" : {
+            name : "Archery Fighting Style",
+            description : desc([
+                "I gain a +2 bonus to attack rolls I make with ranged weapons",
+                "I can't choose a style again even if I get to choose later on"
+            ]),
+            minlevel : 3,
+            source : [["VSoS", 222]],
+            calcChanges : {
+                atkCalc : [
+                    function (fields, v, output) {
+                        if (v.isRangedWeapon && !v.isNaturalWeapon && !v.isDC) output.extraHit += 2;
+                    },
+                    "My ranged weapons get a +2 bonus on the To Hit."
+                ]
+            }
+        },
+        "subclassfeature3.1" : {
+            name : "Bow Arts",
+            source : [["VSoS", 222]],
+            minlevel : 3,
+            description : levels.map(function(n) { 
+                if(n<3) return ""
+                var description = desc([
+                    "I gain proficiency with longbows and shortbows, which are considered monk weapons",
+                    "Any ranged atks I make within 5 ft of a hostile creature do not have disadvantage",
+                    "I can spend ki points to use the Flurry of Arrows and Soul Arrow (see page 3 notes)"
+                ]);
+                
+                if(n >= 6) {
+                    description += desc([
+                        "At 6th level, I can make a ranged weapon attack to deliver a Stunning Strike"
+                    ])
+                }
+            
+                // Add the level 6 description if the level is 6 or higher
+                return description;        
+            }),
+            weaponProfs : [true, false, ["Longbow, Shortbow"]],
+            calcChanges : {
+                atkAdd : [
+                    function(fields, v) {
+                        if((/longbow|shortbow/i).test(v.baseWeaponName + v.WeaponName) && !v.isSpell && !v.theWea.monkweapon && !v.theWea.special) {
+                            v.theWea.monkweapon = true;
+                            fields.Proficiency = true;
+                        } 
+                    },
+                    "I gain proficiency with longbows and shortbows which count as monk weapons.",
+                    1
+                ]
+            },
+            additional : "1 ki point",
+            toNotesPage : [{
+                page3notes : true,
+                name : "Bow Arts: Flurry of Arrows and Soul Arrow",
+                note : desc([
+                    "\u2022 Flurry of Arrows: Immediately after I take the atk action on my turn to make a", 
+                    "  ranged wea atk or unarmed strike, I can spend 1 ki point to make an additional ranged",
+                    "  wea atk as a bns action",
+                    "\u2022 Soul Arrow: When I take the atk action on my turn to make a ranged wea atk, I can", 
+                    "  spend 1 ki point to fire a soul arrow for the first atk. This arrow ignores partial", 
+                    "  cover and deals extra dmg equal to my Wis mod, and does not consume ammunition"
+                ])
+            }]
+        },
+        "subclassfeature6" : {
+            name : "Intercepting Shot",
+            source : [["VSoS", 222]],
+            minlevel : 6,
+            description : desc([
+                "When a visible crea makes an atk against me, I can make a ranged atk roll",
+                "as a rea to interrupt the attack. If my roll is greater than the result of", 
+                "the attacker's, I can reduce the atk roll targeting me by 5 (min. 1)"
+            ]),
+            action : [["reaction", ""]]
+        },
+        "subclassfeature11" : {
+            name : "Serenity of the Wind",
+            source : [["VSoS", 222]],
+            minlevel : 11,
+            description : levels.map(function(n) {
+                if(n<11) return "";
+                var description = desc([
+                    "I can use my bns action and spend 1 ki point to gain blindsight",
+                    "The range is 120 ft and lasts until the end of my next turn"
+                ]);
+            
+                // Append additional description based on level
+                if (n >= 17) {
+                    description += desc([
+                        "At 17th level, I always have blindsight out to a range of 30 ft"
+                    ]);
+                }
+            
+                return description;
+            }),
+            additional : "1 ki point",
+            action : [["bonus action", "Serenity of the Wind (1 ki)"]]
+        },
+        "subclassfeature17" : {
+            name : "Serenity of the Wind: Blindsight",
+            source : [["VSoS", 222]],
+            minlevel : 17,
+            vision : [["blindsight", 30]]
+        },
+        "subclassfeature17" : {
+            name : "Zen Archery",
+            source : [["VSoS", 222]],
+            minlevel : 17,
+            description : desc([
+                "When I miss a ranged wea atk on my turn, I can immediately make another",
+                "vs the same target. I can do this once per each of my turns"
+            ])
+        }
+    }
+})
+
+AddSubClass("monk", "way of the flagellant", {
+    regExpSearch : /^(?=.*flagellant)((?=.*(monk|monastic))|(((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior)))).*$/i,
+    subname : "Way of the Flagellant",
+    source : [["VSoS", 223]],
+    features : {
+        "subclassfeature3" : {
+            name : "Ascetic Implements",
+            source : [["VSoS", 223]],
+            minlevel : 3,
+            description : desc([
+                "I gain proficiency with flails and whips which count as monk weapons.",
+                "I can choose to deal slash. instead of blud. dmg with my unarmed strikes."
+            ]),
+            weaponProfs : [true, false, ["Flail, Whip"]],
+            calcChanges : {
+                atkAdd : [
+                    function(fields, v) {
+                        if((/flail|whip/i).test(v.baseWeaponName) && !v.isSpell && !v.theWea.monkweapon && !v.theWea.special) {
+                            v.theWea.monkweapon = true;
+                            fields.Proficiency = true;
+                        } 
+                    },
+                    "I gain proficiency with flails and whips which count as monk weapons.",
+                    1
+                ]
+            }
+        },
+        "subclassesfeature3.1" : {
+            name : "Penitent Lash",
+            source : [["VSoS", 223]],
+            minlevel : 3,
+            description : desc([
+                "At the start of my turn, I can spend 1 ki point to deal a d4 slash. dmg to myself",
+                "For every d4 I take, I gain adv. on an atk I make before the end of my turn",
+                "Each atk must be with a monk weapon or unarmed strike. Reducing the dmg in anyway",
+                "will cause this ability to have no effect",
+            ]),
+            additional : "1 ki point"
+        },
+        "subclassfeature6" : {
+            name : "Art of Punishment",
+            source : [["VSoS", 223]],
+            minlevel : 6,
+            description : desc([
+                "I learn Branding Palm, Electroshock Strike, and Scissorhand Technique (page 3 notes)",
+            ]),
+            toNotesPage : [{
+                name : "Art of Punishment",
+                source : [["VSoS", 223]],
+                page3notes : true,
+                note : desc([
+                    "\u2022 Branding Palm: When I hit a crea with an unarmed strike, I can spend a bns action and", 
+                    "  1 ki point to brand them. The next atk that hits a branded crea w/in the next minute deals", 
+                    "  an extra 2d8 fire dmg. This becomes 3d8 at 11th and 4d8 at 17th level.",
+                    "\u2022 Electroshock Strike: After I take the attack action on my turn, I can spend 1 ki point", 
+                    "  to cast fire dmg shocking grasp as a bns action. Wis is my spellcasting ability for this",
+                    "\u2022 Scissorhand Technique: If I deal slashing damage using a monk weapon to a crea, I can", 
+                    "  spend 1 ki point to make the target bleed. Constructs, oozes, and undead aren't affected", 
+                    "  A crea with bleeding loses 1d6 hp at the start of each of their turns for each of its bleeding", 
+                    "  wounds it has unless it uses it action to stop all of its wounds from bleeding. A bleeding", 
+                    "  target cannot regain hp and can have a number of wounds up to my Proficiency bonus.",
+                ])
+            }],
+            additional : "1 ki point",
+            action : [["bonus action", "Branding Palm (1 ki)"], ["bonus action", "Electroshock (1 ki)"]],
+            spellcastingBonus : [{
+                spellcastingAbility : 5,
+                name : "Electroshock",
+                spells : ["shocking grasp"],
+                selection : ["shocking grasp"],
+                firstCol : "1 ki"
+            }]
+        },
+        "subclassfeature11" : {
+            name : "Purity Through Pain",
+            source : [["VSoS", 223]],
+            minlevel : 11,
+            description : desc([
+                "When I take dmg that exceeds my character level, I can use my rea to regain 1d4 ki points",
+                "I can do this a number of times equal to Wisdom mod (min 1) per long rest."
+            ]),
+            usages : "Wisdom modifier per ",
+            usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
+            action : [["reaction", ""]]
+        },
+        "subclassfeature17" : {
+            name : "Exsanguinate",
+            source : [["VSoS", 223]],
+            minlevel : 17,
+            description : desc([
+                "When I use Penitent Lash, I can choose to increase the damage to 6d4 or more",
+                "If I do so, I gain all the benefits of Penitent Lash, and all unarmed strikes", 
+                "deal an extra 1d4 slashing damage until the end of my turn."
+            ])
+        }
+    }
+})
+
+AddSubClass("monk", "way of the four fists", {
+    regExpSearch : /^(?=.*\b(four|4)\b)(?=.*fists?)((?=.*(monk|monastic))|(((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior)))).*$/i,
+    subname : "Way of the Four Fists",
+    source : [["VSoS", 224]],
+    features : {
+        "subclassfeature3" : {
+            name : "Grasp of the Monkey",
+            source : [["VSoS", 224]],
+            minlevel : 3,
+            description : desc([
+                "I gain a climbing speed equal to my walking speed, my jump distance is doubled,",
+                "and I have adv. on ability checks and saving throws made to climb, maintain balance,", 
+                "and grip objects such as ledges and ropes. I can manipulate objects with my hands,",
+                "feet, or tail, but cannot attack with an object held by my tail."
+            ]),
+            speed : { climb : { spd : "walk", enc : "walk" } },
+            savetxt : { text : ["Adv. on saves and checks made to climb, balance, and grip"] }
+        },
+        "subclassesfeature3.1" : {
+            name : "Simian Swift",
+            source : [["VSoS", 224]],
+            minlevel : 3,
+            description : desc([
+                "When I roll init. and not surprised, I can spend 1 ki point to move up to half my", 
+                "speed or jump into the air and make an unarmed strike."
+            ]),
+            additional : "1 ki point"
+        },
+        "subclassfeature6" : {
+            name : "Nimbus",
+            source : [["VSoS", 224]],
+            minlevel : 6,
+            description : desc([
+                "As a bonus action, I can summon a cloud to ride on. Until the start of my next turn,", 
+                "I have a flying speed equal to my walking speed, and can maintain this effect by", 
+                "spending 1 ki point on my turn. Otherwise, I begin to fall if there is nothing to hold", 
+                "onto or keep my aloft."
+            ]),
+            additional : "1 ki point",
+            action : [["bonus action", ""]]
+        },
+        "subclassfeature11" : {
+            name : "Uncanny Dodge",
+            source : [["VSoS", 224]],
+            minlevel : 11,
+            description : desc(["As a reaction, I halve the damage of an atk from an attacker that I can see"]),
+            action : [["reaction", ""]]
+        },
+        "subclassfeature17" : {
+            name : "Flurry of Limbs",
+            source : [["VSoS", 224]],
+            minlevel : 17,
+            description : desc(["Whenever I use \"Flurry of Blows\" on my turn, I can make 3 unarmed strikes rather than 2."])
+        }
+    }
+})
+
+AddSubClass("monk", "way of the mask", {
+    regExpSearch : /^(?=.*mask)((?=.*(monk|monastic))|(((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior)))).*$/i,
+    subname : "Way of the Mask",
+    source : [["VSoS", 225]],
+    abilitySave : 5,
+	abilitySaveAlt : 6,
+    features : {
+        "subclassfeature3" : {
+            name : "Crowd Favorite",
+            source : [["VSoS", 225]],
+            minlevel : 3,
+            description : desc([
+                "I can choose to add my Cha mod instead of my Wis mod when determining ki save DC", 
+                "While wearing no armor and not wielding a shield, my AC is 10 + Str mod + Cha mod."
+            ]),
+            armorOptions : [{
+                regExpSearch : /unarmored defense \(cha\)/i,
+                name : "Unarmored Defense (Cha)",
+                source : [["VSoS", 225]],
+                ac : "10+Str+Cha",
+                dex : -10, //do not add our dex mod
+                affectsWildShape : true,
+                selectNow : true
+            }]
+        },
+        "subclassfeature3.1" : {
+            name : "Heavyweight Champion",
+            source : [["VSoS", 225]],
+            minlevel : 3,
+            description : desc([
+                "I can wrestle obstacles even if they cannot be conventionally wrestled",
+                "I gain the following:",
+                "\u2022 I can grapple any crea regardless of size",
+                "\u2022 I can use an action to pin a creature grappled by me. I make", 
+                "  another grapple check, and if I succeed, we're both restrained until the grapple ends",
+                "\u2022 If I have the Grappler feat, I can choose whether a target grappled by me must", 
+                "  make a Athletics or Acrobatics check to escape"
+            ]),
+            action : [["action", "Pin Creature (if grappled)"]]
+        },
+        "subclassfeature6" : {
+            name : "Signature Move",
+            source : [["VSoS", 225]],
+            minlevel : 6,
+            description : desc([
+                "I gain a signature move using the \"Choose Feature\" button."
+            ]),
+            choices : ["Foreign Object", "Headbutt of Justice", "Infinity Suplex"],
+            "foreign object" : {
+                name : "Foreign Object",
+                source : [["VSoS", 225]],
+                description : desc([
+                    "I am proficient with improvised weapons, which count as monk weapons for me.", 
+                    "Once on each of my turns, I can spend 1 ki point to add half of my monk level", 
+                    "to the dmg of an improvised weapon."
+                ]),
+                weaponProfs : [true, false, ["Improvised weapons"]],
+                calcChanges : {
+                    atkAdd : [
+                        function(fields, v) {
+                            if(((/improvised/i).test(v.WeaponName + v.baseWeaponName) || (/improvised weapon/i).test(v.theWea.type)) && !v.isSpell && !v.theWea.monkweapon && !v.theWea.special) {
+                                v.theWea.monkweapon = true;
+                                fields.Proficiency = true;
+                            } 
+                        },
+                        "I gain proficiency with improvised weapons which count as monk weapons.",
+                        1
+                    ]
+                },
+                additional : "1 ki point"
+            },
+            "headbutt of justice" : {
+                name : "Headbutt of Justice",
+                source : [["VSoS", 225]],
+                description : desc([
+                    "Once on each of my turns when I miss with an unarmed strike, I can spend", 
+                    "1 ki point to follow up with a headbutt. I make another unarmed strike against", 
+                    "the target, but the dmg of this atk is 1d8."
+                ]),
+                additional : "1 ki point"
+            },
+            "infinity suplex" : {
+                name : "Infinity Suplex",
+                source : [["VSoS", 225]],
+                description : desc([
+                    "While I am grappling another crea, I can spend 1 ki point and a bonus action to end", 
+                    "the grapple to hurl the target over my shoulder and slam them into the ground, making", 
+                    "an atk roll vs the crea. On a hit, they take 2d10 + Str mod of blud. dmg and knocked prone"
+                ]),
+                additional : "1 ki point"
+            }
+        },
+        "subclassfeature11" : {
+            name : "Off the Top Rope",
+            source : [["VSoS",225]],
+            minlevel : 11,
+            description : desc([
+                "Once per turn when I fall 5 ft or more immediately before making an unarmed strike", 
+                "I can choose to either make it a stunning strike without expending any ki or knock", 
+                "the target prone and automatically grapple the target on a hit"
+            ]),
+            usages : 1,
+            recovery : "Turn"
+        },
+        "subclassfeature17" : {
+            name : "Choked Out",
+            source : [["VSoS",225]],
+            minlevel : 17,
+            description : desc([
+                "When I pin a creature grappled by me, I can spend 2 ki points to attempt to choke", 
+                "the creature out. The creature must make a Con save against my ki save DC", 
+                "or be knocked unconscious until the start of my next turn.",
+            ]),
+            additional : "2 ki points"
+        }
+    }
+})
+
+AddSubClass("monk", "way of the rose", {
+    regExpSearch : /^(?=.*rose)((?=.*(monk|monastic))|(((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior)))).*$/i,
+    subname : "Way of the Rose",
+    source : [["VSoS", 226]],
+    features : {
+        "subclassfeature3" : {
+            name : "Sweet Aroma",
+            source : [["VSoS", 226]],
+            minlevel : 3,
+            description : desc([
+                "I have advantage on Persuasion checks related to love and romance",
+                "Crea(s) with the Keen Sense trait have disadv. on ability checks made to track me."
+            ])
+        },
+        "subclassfeature3.1" : {
+            name : "Blossom Burst",
+            source : [["VSoS", 226]],
+            minlevel : 3,
+            description : desc([
+                "I can spend 1 ki point to produce an eruption of flower petals to obscure a crea's vision", 
+                "Until the end of its next turn, it can see out to a range of 5 ft but is blind beyond that",
+                "The petals follow the crea unless it moves more than 40 ft on its turn or take the dash action"
+            ]),
+            additional : "1 ki point"
+        },
+        "subclassfeature6" : {
+            name : "Falling Petal Fury",
+            source : [["VSoS", 226]],
+            minlevel : 6,
+            description : desc([
+                "Whenever I use Flurry of Blows, I can spend 1 additional ki point to teleport up to 10 ft", 
+                "in any direction. This movement can happen before, during, or after the attacks, but can't", 
+                "be split into two moves."
+            ]),
+            additional : "1 ki point"
+        },
+        "subclassfeature11" : {
+            name : "Colors of Love",
+            source : [["VSoS", 226]],
+            minlevel : 11,
+            description : desc([
+                "When I finish a long rest, I can choose an aura which lasts until I choose a different one", 
+                "and radiates to a range of 5 ft (see page 3 notes)"
+            ]),
+            toNotesPage : [{
+                name : "Colors of Love: Auras",
+                note : desc([
+                    "\u2022 Pink: I can use the help action as a bonus action to assist an ally in my aura",
+                    "\u2022 Red: When a friendly crea in my aura hits an attack, they can use its bonus action", 
+                    "  with the attack to deal an extra 1d6 dmg",
+                    "\u2022 White: When a friendly crea ends its turn in my aura, it gains my Wis mod in temp hp",
+                    "  The crea cannot be myself"
+                ]),
+                page3notes : true
+            }]
+        },
+        "subclassfeature17" : {
+            name : "Wreathed in Thorns",
+            source : [["VSoS", 226]],
+            minlevel : 17,
+            description : desc([
+                "When I take dmg from a visible crea within 5 ft of me, I can spend 1 ki point", 
+                "as a rea to make an unarmed strike against that creature."
+            ]),
+            additional : "1 ki point",
+            action : [["reaction", "Wreathed in Thorns (1 ki)"]]
+        }
+    }
+})
+
+AddSubClass("monk", "way of street fighting", {
+    regExpSearch : /^(?=.*street)(?=.*fighting)((?=.*(monk|monastic))|(((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior)))).*$/i,
+    subname : "Way of Street Fighting",
+    source : [["VSoS", 226]],
+    features : {
+        "subclassfeature3" : {
+            name : "Combo",
+            source : [["VSoS", 227]],
+            minlevel : 3,
+            description : desc([
+                "On my turn, I gain a +2 bonus to atk rolls of my unarmed strikes", 
+                "for each hit that I have made on that target on my turn, to a max of +6", 
+                "This bonus resets to 0 if I take damage on my turn."
+            ])
+        },
+        "subclassfeature6" : {
+            name : "Iron Fist",
+            source : [["VSoS", 227]],
+            minlevel : 6,
+            description : desc([
+                "My unarmed strikes ignore the dmg threshold of objects and deal max dmg to them"
+            ])
+        },
+        "subclassfeature11" : {
+            name : "Special Moves",
+            source : [["VSoS", 227]],
+            minlevel : 11,
+            description : desc([
+                "I can use ki points to perform the special moves found on the page 3 notes"
+            ]),
+            action : [["action", "Ki Blast (2 ki)"]],
+            toNotesPage : [{
+                name : "Special Moves",
+                page3notes : true,
+                note : desc([
+                    "\u2022 Ki Blast: As an action, I can spend 2 ki points to make a ranged spell atk using Wis as the", 
+                    "  spellcasting ability modifier against a crea I can see w/in 120 ft of me. On a hit, the target", 
+                    "  takes 6d8 + \u00BD my monk level in force dmg",
+                    "\u2022 Uppercut: Immediately after I take the attack action on my turn, I can spend 1 ki point to", 
+                    "  make an unarmed strike as a bns action. On a hit, if the crea is \u2264Large and doesn't have all", 
+                    "  of its hp, it takes dmg as normal and is then knocked prone",
+                    "\u2022 Whirlwind Strike: When I make a melee atk on my turn against a visible crea, I can spend 1 ki", 
+                    "  point to lunge up to 15 ft toward the target before making the atk. This movement doesn't", 
+                    "  provoke opportunity atks. I can peform this movement even if it causes me to travel through", 
+                    "  the air, though I fall if I do not land on solid ground after making the attack"
+                ])
+            }],
+            weaponOptions : [{
+				regExpSearch : /ki blast/i,
+				name : "Ki Blast",
+				source : [["VSoS", 227]],
+				ability : 5,
+				range : "120 ft",
+				damage : [6, 8, "Force"],
+				description : "",
+                type : "AlwaysProf", // This is not a weapon or a spell
+                isNotWeapon : true, 
+                isAlwaysProf : true,
+                special : true, // prevents calculations with other features
+                abilitytodamage : false, // do not add our wisdom mod
+				selectNow : true
+            }],
+            calcChanges : {
+				atkCalc : [
+					function (fields, v, output) {
+						if ((/ki blast/i).test(v.WeaponTextName)) {
+							output.extraDmg += Math.floor(classes.known.monk.level/2);
+						};
+					},
+					'',
+					1
+				]
+			}
+        },
+        "subclassfeature17" : {
+            name : "K.O.",
+            source : [["VSoS", 227]],
+            minlevel : 17,
+            description : desc([
+                "I can use my action and 3 ki points to make an unarmed strike against a crea w/in my reach", 
+                "On a hit, the target takes dmg as normal, and if it has \u2264100 hp, it is reduced to 0 hp,", 
+                "knocked unconscious, and becomes stable"
+            ]),
+            usages : 1,
+            recovery : "long rest"          
+        }
+    }
+})
+
+// * Paladin Subclasses
+AddSubClass("paladin", "oath of storms", {
+    regExpSearch : /^(((?=.*(storms(s)?))((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper)))))|((?=.*dark)(?=.*knight))|(?=.*avenger)).*$/i,
+    subname : "Oath of Storms",
+    source : ["VSoS", 232],
+    features : {
+        "subclassfeature3" : {
+            name : "Channel Divinity: Thunderous Revenge",
+            source : ["VSoS", 232],
+            minlevel : 3,
+            description : desc([
+                "Immediately after a visible crea w/in 30 ft deals dmg to me with an atk",
+                "I can use my rea and force the atker to make a Wis save",
+                "The atker takes dmg equal to the dmg dealt to me on a failed save, or \u00BD on success",
+            ]),
+            action : ["reaction", ""],
+            spellcastingExtra : ["fog cloud", "thunderwave", "gust of wind", "hold person", "call lightning", "wind wall", "control water", "ice storm", "commune with nature", "hold monster"]
+        },
+        "subclassfeature3.1" : {
+            name : "Channel Divinity: Walk on Waves",
+            source : ["VSoS", 232],
+            minlevel : 3,
+            descroption : desc([
+                "As a bonus action, for the next hour I gain the benefits of water walk",
+                "Additionally, my spd is 2\xd7 when walking on water"
+            ]),
+            action : ["bonus action", ""],
+            spellcastingBonus : [{
+                name : "Channel Divinity",
+                spells : ["water walk"],
+                selection : ["water walk"],
+                times : levels.map(function(n) {
+                    return n < 3 ? 0 : 1;
+                }),
+            }],
+            spellChanges : {
+                "water walk" : {
+                    description : "You can move across any liquid for the duration; rise to surface if underwater; spd is 2\xd7 while on water",
+                    changes : "I gain the benefits of water walk, and my speed is doubled while on water"
+                }
+            }
+        },
+        "subclassfeature7" : {
+            name : "Vortex Aura",
+            source : ["VSoS", 232],
+            minlevel : 7,
+            additional : levels.map(function (n) { return n < 7 ? "" : (n < 18 ? 10 : 30) + "-foot aura"; }),
+            description : desc([
+                "I can use my bns action to summon a strong wind, it lasts until I dismiss it (free action)",
+                "While active, anything w/in my aura is difficult terrain for crea(s) I choose",
+                "The wind puts on unprotected flames such as candles, and disperses gases"
+            ]),
+            action : ["bonus action", ""]
+        },
+        "subclassfeature15" : {
+            name : "Storm Soul",
+            source : ["VSoS", 233],
+            minlevel : 15,
+            description : desc([
+                "I gain resistance to lightning dmg",
+                "Whenever a visible crea w/in 5 ft hits me w/ a melee atk, it takes",
+                "lightning dmg equal to my Cha mod."
+            ]),
+            dmgres : ["Lightning"]
+        },
+        "subclassfeature20" : {
+            name : "Thunder God",
+            source : ["VSoS", 233],
+            minlevel : 20,
+            description : desc([
+                "As an action, I gain the following for the next minute:",
+                "\u2022 Immunity to lightning and thunder dmg",
+                "\u2022 Fly speed of 60 ft",
+                "\u2022 Cast call lightning as a bonus action at 5th level w/o a SS or comp.",
+                "  I can use my bns action on subsequent turns to call down lightning using the spell"
+            ]),
+            usages : 1,
+            recovery : "long rest",
+            action : ["action", ""],
+            eval : function() {
+                CurrentSpells["thunder god"] = {
+                    name : "Thunder God",
+                    ability : "paladin",
+                    list : { spells : [], prepared : true  },
+			        known : { cantrips : 0, spells : 'list' },
+                    bonus : {
+                        bonus1 : {
+                            name : "Thunder God",
+                            spells : ['call lightning'],
+                            selection : ['call lightning'],
+                        }
+                    },
+                    typeList : 2,
+                    refType : "class",
+                    allowUpCasting : false,
+                    firstCol : "markedbox"
+                };
+                SetStringifieds('spells'); CurrentUpdates.types.push('spells');
+            },
+            removeeval : function () {
+                delete CurrentSpells['thunder god'];
+                SetStringifieds('spells'); CurrentUpdates.types.push('spells');
+            },
+            calcChanges : {
+                spellAdd : [
+                    function(spellKey, spellObj, spName) {
+                        if(spellKey === "call lightning" && spName === "thunder god") {
+                            spellObj.description = "60-ft rad 10-ft high cloud; 1 bns all in 5-ft rad under cloud 5d10 Lightning dmg; save half";
+                            spellObj.descriptionShorter = "60-ft rad 10-ft high cloud; 1 bns all in 5-ft rad under it 5d10 Lightn. dmg; save half";
+                            spellObj.time = "1 bns"
+                        }
+                    }
+                ]
+            }
+        }
+    }
 });
 
 // ! This section adds companionlists
@@ -32620,6 +33583,36 @@ MagicItemsList["bag of bones"] = {
 
 // ! This section adds weapons
 
+/*
+
+"off-hand" or "secondary" for "two-weapon fighting"
+Following properties get this feature:
+    - Blaster
+    - Loading
+    - Reload
+    - Thrown
+
+TODO: Need to create a function that loops through each weapon with one of these properties and add "off-hand" to it
+*/
+
+RunFunctionAtEnd(function () {
+    for( var weapon in WeaponsList ) {
+        // If it has one of the following, it is considered to have the off-hand, two-weapon property
+        var aRegExp = /(blaster|loading|reload|thrown)/i;
+        // The weapon object
+        var weaObj = WeaponsList[weapon];
+
+        // Check whether one of the attributes is found
+        if((aRegExp).test(weaObj.name + weaObj.description)) {
+            // skip if this is not a firearm and if it's not a light weapon
+            if( !/firearms?/i.test(weaObj.list) && !/light/i.test(weaObj.description) ) continue;
+            // If "off-hand" or "secondary" isn't already included in the name or description, add it to the description.
+            if(((/^(?!.*(spell|cantrip))(?=.*(off.{0,3}hand|secondary))(?=.*\-\d+\s?dmg)(?=.*\(min\.\s?1\)).*$/i).test(weaObj.name + weaObj.description))) continue;
+            weaObj.description += (weaObj.description ? ", " : "") + "off-hand -2 dmg (min. 1)";
+        }
+    }
+});
+
 WeaponsList["bomb"] = {
 	regExpSearch : /^(?!.*renaissance)(?=.*\bbomb\b).*$/i,
 	name : "Bomb",
@@ -32635,6 +33628,554 @@ WeaponsList["bomb"] = {
 	tooltip : "   Special: When a bomb hits a target, it explodes in a 5-foot radius and is destroyed. The bomb can be thrown at an unoccupied space within its range. Each creature other than the target within the blast radius must succeed on a DC 11 Dexterity saving throw, taking half the damage rolled on a failed save or no damage on a successful one.\n   Additionally, as a bonus action, you can empty some of the bomb's explosive material to permanently remove the blast radius from this bomb, dealing damage only to the bomb's target.",
 	special : true,
 	abilitytodamage : true,
+};
+// * Simple weapons
+WeaponsList["cestus"] = {
+    regExpSearch : /cestus/i,
+    name : "Cestus",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 4, "bludgeoning"],
+    range : "Melee",
+    weight : 2,
+    description : "Fist, light",
+    tooltip : "Fist: Attacks made with this weapon are treated as unarmed strikes",
+    abilitytodamage : true,
+    monkweapon : true,
+    baseWeapon : "unarmed strike"
+};
+WeaponsList["claw gauntlet"] = {
+    regExpSearch : /claw gauntlet/i,
+    name : "Claw Gauntlet",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 4, "slashing"],
+    range : "Melee",
+    weight : 2,
+    description : "Fist, light",
+    tooltip : "Fist: Attacks made with this weapon are treated as unarmed strikes",
+    abilitytodamage : true,
+    monkweapon : true,
+    baseWeapon : "unarmed strike"
+};
+WeaponsList["fishhook"] = {
+    regExpSearch : /fishhook/i,
+    name : "Fishhook",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 6, "piercing"],
+    range : "Melee",
+    weight : 3,
+    description : "Versatile (1d8)",
+    abilitytodamage : true,
+    monkweapon : true
+};
+WeaponsList["hook hand"] = {
+    regExpSearch : /hook hand/i,
+    name : "Hook Hand",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 4, "piercing"],
+    range : "Melee",
+    weight : 1,
+    description : "Finesse, light, special",
+    tooltip : "Special: A creature must be missing a hand to use this weapon. If a creature replaces their missing hand with their weapon, they're considered always proficient.",
+    isAlwaysProf : true,
+    special : true,
+    abilitytodamage : true,
+    monkweapon : true
+};
+WeaponsList["kama"] = {
+    regExpSearch : /^(?=.*kama)(?!.*kusarigama).*$/i,
+    name : "Kama",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 4, "slashing"],
+    range : "Melee",
+    weight : 2,
+    description : "Finesse, light",
+    abilitytodamage : true,
+    monkweapon : true
+};
+WeaponsList["machete"] = {
+    regExpSearch : /machete/i,
+    name : "Machete",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 6, "Slashing"],
+    range : "Melee",
+    weight : 4,
+    description : "Special",
+    tooltip : "Special: Deals double damage to Plants and vegetation",
+    special : true,
+    abilitytodamage : true,
+    monkweapon : true
+};
+WeaponsList["pickaxe"] = {
+    regExpSearch : /pickaxe/i,
+    name : "Pickaxe",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 8, "piercing"],
+    range : "Melee",
+    weight : 10,
+    description : "Two-handed",
+    abilitytodamage : true,
+};
+WeaponsList["punching dagger"] = {
+    regExpSearch : /punching dagger/i,
+    name : "Punching Dagger",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 4, "piercing"],
+    range : "Melee",
+    weight : 2,
+    description : "Fist, light",
+    abilitytodamage : true,
+    monkweapon : true
+};
+WeaponsList["sai"] = {
+    regExpSearch : /sai/i,
+    name : "Sai",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 4, "piercing"],
+    range : "Melee",
+    weight : 2,
+    description : "Finesse, light",
+    abilitytodamage : true,
+    monkweapon : true
+};
+WeaponsList["scorpion on a stick"] = {
+    regExpSearch : /scorpion on a stick/i,
+    name : "Scorpion on a Stick",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 6, "poison"],
+    range : "Melee",
+    weight : 0.5,
+    description : "",
+    abilitytodamage : true,
+    monkweapon : true
+};
+WeaponsList["shovel"] = {
+    regExpSearch : /shovel/i,
+    name : "Shovel",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 8, "slashing"],
+    range : "Melee",
+    weight : 5,
+    description : "Two-handed",
+    abilitytodamage : true,
+};
+WeaponsList["tonfa"] = {
+    regExpSearch : /tonfa/i,
+    name : "Tonfa",
+    source : ["VSoS", 292],
+    list : "melee",
+    ability : 1,
+    type : "Simple",
+    damage : [1, 4, "bludgeoning"],
+    range : "Melee",
+    weight : 1,
+    description : "Light",
+    abilitytodamage : true,
+    monkweapon : true
+};
+// * Martial Weapons
+WeaponsList["bayonet"] = {
+    regExpSearch : /bayonet/i,
+    name : "Bayonet",
+    source : ["VSoS", 293],
+    list : "melee",
+    ability : 1,
+    type : "Martial",
+    damage : [1, 4, "piercing"],
+    range : "Melee",
+    weight : 1,
+    description : "Finesse, light, special",
+    tooltip : "Special: As an action, a bayonet can be mounted to any two-handed ranged weapon or removed from it. While mounted, you can use the bayonet to make a two-handed melee weapon attack, which deals 1d8 piercing damage on a hit.",
+    special : true,
+    abilitytodamage : true,
+};
+WeaponsList["catchpole"] = {
+    regExpSearch : /catchpole/i,
+    name : "Catchpole",
+    source : ["VSoS", 293],
+    list : "melee",
+    ability : 1,
+    type : "Martial",
+    damage : [1, 6, "piercing"],
+    range : "Melee",
+    weight : 6,
+    description : "Reach, two-handed, special",
+    tooltip : "Special: This weapon is used to immobilize creatures at a distance. When you hit a creature of Large size or smaller with this weapon, you can attempt to grapple the creature instead of dealing damage. This grapple check uses your attack roll instead of a Strength (Athletics) check. If I grapple a creature this way, I can't use this weapon on another target.",
+    special : true,
+    abilitytodamage : true,
+};
+WeaponsList["cutlass"] = {
+    regExpSearch : /cutlass/i,
+    name : "Cutlass",
+    source : ["VSoS", 293],
+    list : "melee",
+    ability : 1,
+    type : "Martial",
+    damage : [1, 8, "slashing"],
+    range : "Melee",
+    weight : 2,
+    description : "Finesse",
+    abilitytodamage : true,
+};
+WeaponsList["estoc"] = {
+    regExpSearch : /estoc/i,
+    name : "Estoc",
+    source : ["VSoS", 293],
+    list : "melee",
+    ability : 1,
+    type : "Martial",
+    damage : [1, 8, "piercing"],
+    range : "Melee",
+    weight : 3,
+    description : "Versatile (1d10)",
+    abilitytodamage : true,
+};
+WeaponsList["harpoon"] = {
+    regExpSearch : /harpoon/i,
+    name : "Harpoon",
+    source : ["VSoS", 293],
+    list : "melee",
+    ability : 1,
+    type : "Martial",
+    damage : [1, 8, "piercing"],
+    range : "Melee, 20/60 ft",
+    weight : 4,
+    description : "Thrown, special",
+    tooltip : "You can use an action to tie a rope to the end of a harpoon before it is thrown. If a rope-tied harpoon hits a target, it becomes embedded in the target, and you can use an action on subsequent turns to hold fast to the rope and make an opposed Strength (Athletics) check against the target to pull it up to 10 feet closer to you. Additionally, when the target moves, you can use your reaction to make an opposed Strength (Athletics) check against it, preventing its movement on a success. If you use your action to do anything else, you lose your grip on the rope. If the target has hands, it can remove the harpoon as an action.",
+    special : true,
+    abilitytodamage : true,
+};
+WeaponsList["katana"] = {
+    regExpSearch : /katana/i,
+    name : "Katana",
+    source : ["VSoS", 293],
+    list : "melee",
+    ability : 1,
+    type : "Martial",
+    damage : [1, 8, "slashing"],
+    range : "Melee",
+    weight : 3,
+    description : "Finesse, versatile (1d10)",
+    abilitytodamage : true,
+};
+WeaponsList["khopesh"] = {
+    regExpSearch : /khopesh/i,
+    name : "Khopesh",
+    source : ["VSoS", 293],
+    list : "melee",
+    ability : 1,
+    type : "Martial",
+    damage : [1, 6, "slashing"],
+    range : "Melee",
+    weight : 4,
+    description : "Fiensse, light, trip",
+    tooltip : "Trip: You can attempt a shove against any creature within the weapon's reach. IYou have advantage on ability checks you make to shove a creature using this weapon.",
+    abilitytodamage : true,
+};
+WeaponsList["naginata"] = {
+    regExpSearch : /naginata/i,
+    name : "Naginata",
+    source : ["VSoS", 293],
+    list : "melee",
+    ability : 1,
+    type : "Martial",
+    damage : [1, 10, "slashing"],
+    range : "Melee",
+    weight : 5,
+    description : "Heavy, reach, two-handed",
+    abilitytodamage : true,
+};
+WeaponsList["nunchaku"] = {
+    regExpSearch : /nunchaku/i,
+    name : "Nunchaku",
+    source : ["VSoS", 293],
+    list : "melee",
+    ability : 1,
+    type : "Martial",
+    damage : [1, 6, "bludgeoning"],
+    range : "Melee",
+    weight : 1,
+    description : "Finesse, light",
+    abilitytodamage : true,
+};
+WeaponsList["arc blade"] = {
+	regExpSearch : /^(?=.*arc)(?=.*blade).*$/i,
+	name : "Arc Blade",
+	source : ["VSoS", 330],
+	list : "spell",
+	ability : 0,
+	type : "Cantrip",
+	damage : ["Bd8/Cd6", "", "lightning"],
+	range : "With melee wea",
+	description : "Wea dmg is Ltng; 1st dmg added to the atk; 2nd to a tgt within 5 ft on hit",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["burning blade"] = {
+	regExpSearch : /^(?=.*burning)(?=.*blade).*$/i,
+	name : "Burning Blade",
+	source : ["VSoS", 331],
+	list : "spell",
+	ability : 0,
+	type : "Cantrip",
+	damage : ["Bd6/Cd6", "", "fire"],
+	range : "With melee wea",
+	description : "Wea dmg is Fire; 1st dmg added to the atk; 2nd as rea when tgt enters/ends in space",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["candy blast"] = {
+	regExpSearch : /candy blast/i,
+	name : "Candy Blast",
+	source : ["VSoS", 332],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 8, "bludgeoning"],
+	range : "60 ft",
+	description : "On hit, target space becomes difficult terrain; 1 action to clear",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["card trick"] = {
+	regExpSearch : /card trick/i,
+	name : "Card Trick",
+	source : ["VSoS", 332],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 6, "force"],
+	range : "60 ft",
+	description : "Choose: spell attack, or target Dex save vs. spell save DC",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["caustic blade"] = {
+	regExpSearch : /caustic blade/i,
+	name : "Caustic Blade",
+	source : ["VSoS", 332],
+	list : "spell",
+	ability : 0,
+	type : "Cantrip",
+	damage : ["Bd8/Cd8", "", "acid"],
+	range : "With melee wea",
+	description : "Wea dmg is Acid; 1st dmg on hit, 2nd on miss by 3 or less",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["eldritch orb"] = {
+	regExpSearch : /eldritch orb/i,
+	name : "Eldritch Orb",
+	source : ["VSoS", 337],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 8, "force"],
+	range : "60 ft",
+	description : "On hit, crea in 5 ft Dex save; success: nothing, fail: half dmg",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["eye of anubis"] = {
+	regExpSearch : /eye of anubis/i,
+	name : "Eye of Anubis",
+	source : ["VSoS", 337],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 8, "necrotic"],
+	range : "60 ft",
+	description : "On hit, tgt can't Disengage til end of my next turn; see spell or book for scaling",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["eye of ra"] = {
+	regExpSearch : /eye of ra/i,
+	name : "Eye of Ra",
+	source : ["VSoS", 338],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 8, "radiant"],
+	range : "60 ft",
+	description : "On hit, tgt can't Hide til end of my next turn; see spell or book for scaling",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["finger guns"] = {
+	regExpSearch : /finger guns/i,
+	name : "Finger Guns",
+	source : ["VSoS", 338],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 8, "force"],
+	range : "60 ft",
+	description : "1 action to attack for 1 minute; counts as firearm",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["flesh ripper"] = {
+	regExpSearch : /flesh ripper/i,
+	name : "Flesh Ripper",
+	source : ["VSoS", 338],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 8, "piercing"],
+	range : "30 ft",
+	description : "On hit, target can't move more than 30 ft away from me without a Str save",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["force dart"] = {
+	regExpSearch : /force dart/i,
+	name : "Force Dart",
+	source : ["VSoS", 339],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 10, "force"],
+	range : "120 ft",
+	description : "Can target creatures or objects",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["force weapon"] = {
+	regExpSearch : /force weapon/i,
+	name : "Force Weapon",
+	source : ["VSoS", 339],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 10, "Force"],
+	range : "5 ft",
+	description : "Can also make 1 opportunity attack before next turn; scaling adds atks, not dmg",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["frigid blade"] = {
+	regExpSearch : /frigid blade/i,
+	name : "Frigid Blade",
+	source : ["VSoS", 340],
+	list : "spell",
+	ability : 0,
+	type : "Cantrip",
+	damage : ["Bd8/Cd8", "", "cold"],
+	range : "With melee wea",
+	description : "Wea dmg is Cold; 1st dmg add to atk; 2nd as rea to tgt if it moves before my next turn",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["lightning surge"] = {
+	regExpSearch : /lightning surge/i,
+	name : "Lightning Surge",
+	source : ["VSoS", 347],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 6, "lightning"],
+	range : "S:5-ft rad",
+	description : "Crea in range Dex save; success: nothing",
+	abilitytodamage : false,
+	dc : true
+};
+WeaponsList["magic daggers"] = {
+	regExpSearch : /magic daggers/i,
+	name : "Magic Daggers",
+	source : ["VSoS", 348],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 6, "piercing"],
+	range : "60 ft",
+	description : "Each die is a separate dagger; scaling adds attacks, not dmg",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["minor lifesteal"] = {
+	regExpSearch : /minor lifesteal/i,
+	name : "Minor Lifesteal",
+	source : ["VSoS", 349],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 4, "necrotic"],
+	range : "60 ft",
+	description : "Con save, success: nothing; fail: I gain damage dealt as Temporary HP",
+	abilitytodamage : false,
+	dc : true
+};
+WeaponsList["sonic pulse"] = {
+	regExpSearch : /sonic pulse/i,
+	name : "Sonic Pulse",
+	source : ["VSoS", 354],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 8, "thunder"],
+	range : "60 ft",
+	description : "Con save, fail: deafened until my next turn; within 10 ft, d10s instead of d8s",
+	abilitytodamage : false,
+	dc : true
+};
+WeaponsList["spark of life"] = {
+	regExpSearch : /spark of life/i,
+	name : "Spark of Life",
+	source : ["VSoS", 354],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["Special", "", "bludgeoning"],
+	range : "60 ft",
+	description : "Corpse in range moves up to 15 ft and attack for 1d4/1d6/1d8/1d10/1d12 dmg; see book",
+	abilitytodamage : false,
+	dc : false
+};
+WeaponsList["thunderous distortion"] = {
+	regExpSearch : /thunderous distortion/i,
+	name : "Thunderous Distortion",
+	source : ["VSoS", 355],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 6, "thunder"],
+	range : "S:10-ft cone",
+	description : "Crea in area Con save; cast again next turn for d8s instead of d6s",
+	abilitytodamage : false,
+	dc : true
 };
 
 // ! This section adds spells
