@@ -22,10 +22,11 @@ AddSubClass("sorcerer", "rifthopper", {
                 "I can use an action to teleport a small object that isn’t being worn or carried within 30 feet to my hand.",
                 "Alternatively, I can teleport an object from my hand to a space I can see within 30 feet.",
                 "The object can weigh no more than a certain amount, based on my sorcerer level."
-            ]),
+            
             additional : levels.map(function(n) {
                 return (n < 6 ? 5 : n < 15 ? 14 : 20) + " pounds";
             }),
+                ]),
             action : ["action", "Teleport Object"] 
         },
         "subclassfeature1.1" : {
