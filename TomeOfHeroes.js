@@ -150,8 +150,8 @@ AddSubClass("sorcerer", "rifthopper", {
                     "5th: \t 240ft",
                     "6th: \t 480ft",
                     "7+: \t 960ft" 
-				],
+				]
 			},
         },
-    },
+    }
 });
