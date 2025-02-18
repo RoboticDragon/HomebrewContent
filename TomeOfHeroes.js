@@ -1,4 +1,4 @@
-var iFileName = "Sorcerer - Rifthopper (Kobold Press).js";
+var iFileName = "Tome of Heroes (Kobold Press).js";
 RequiredSheetVersion("13.1.12");
 
 SourceList["WSoBP"] = {
