@@ -12,7 +12,6 @@ SourceList["WSoBP"] = {
 AddSubClass("sorcerer", "rifthopper", {
     regExpSearch : /^(?=.*(mage|magus|sorcerer|witch))(?=.*(rifthopper)).*$/i,
     subname : "Rifthopper",
-    fullname : "Rifthopper",
     source : [["WSoBP", 130]],
     features : {
         "subclassfeature1" : {
