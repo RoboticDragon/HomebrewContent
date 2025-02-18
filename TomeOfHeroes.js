@@ -105,7 +105,7 @@ AddSubClass("sorcerer", "rifthopper", {
                 "When I cast a spell that deals damage, I can change its damage type to thunder.",
                 "If the spell imposes a condition on a damaged creature, I can impose deafened instead."
             ]),
-            dmgimm : ["Thunder"]
+            immune : ["Thunder"]
         },
         "subclassfeature14.1" : {
             name : "Familiar Locations",
@@ -138,7 +138,20 @@ AddSubClass("sorcerer", "rifthopper", {
             description : desc([
                 "My thunder cantrips affect creatures even if they succeed on a saving throw.",
                 "I can teleport using my full movement and a spell slot, with range based on slot level."
-            ])
-        }
-    }
+            ]),
+            toNotesPage : [{
+				name : "Rifthopper Teleportation Distance",
+				source : [["WSoBP", 130]],
+				popupName : "Spell Slot Teleportation",
+				note : [
+					"2nd: \t 30ft",
+                    "3rd: \t 60ft",
+                    "4th: \t 120ft",
+                    "5th: \t 240ft",
+                    "6th: \t 480ft",
+                    "7+: \t 960ft" 
+				],
+			},
+        },
+    },
 });
