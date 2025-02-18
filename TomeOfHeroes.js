@@ -23,7 +23,7 @@ RaceList["alseid"] = {
 	weaponProfs : [false, false, ["spears", "shortbows"]],
 	skills : [["stealth"]],
 	age : " reach maturity by the age of 20. They can live well beyond 100 years, but it is unknown just how old they can become.",
-	height : " stand over 6 feet tall")",
+	height : " stand over 6 feet tall",
 	weight : " weigh around 300 lb",
 	scores : [0, 2, 0, 0, 1, 0],
 	trait : "Alseid (+2 Dexterity, +1 Wisdom)\n\nAlseid Weapon Training: I have proficiency in spears and shortbows\nLight Hooves: I have proficiency in stealth\nQuadruped: I have to squeeze when moving through trapdoors, manholes, and similar structures even when a Medium humanoid wouldn’t have to squeeze. In addition, ladders, stairs, and similar structures are difficult terrain for me.\nWoodfriend: When in a forest, I leave no tracks and can automatically discern true north.\n"
