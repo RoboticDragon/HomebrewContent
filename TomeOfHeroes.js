@@ -50,12 +50,12 @@ AddSubClass("sorcerer", "rifthopper", {
             },
             vision : [["Tremorsense", 10]],
             extraname : "Reverberating Quintessence Upgrades",
-            choices : ["3rd Level Upgrade", "6th Level Upgrade"],
-            "3rd Level Upgrade" : {
+            choices : ["level 3 upgrade", "level 6 upgrade"],
+            "level 3 upgrade" : {
                 description : "I gain resistance to thunder damage.",
                 dmgres : ["Thunder"]
             },
-            "6th Level Upgrade" : {
+            "level 6 upgrade" : {
                 description : "My tremorsense increases to 20 feet.",
                 vision : [["Tremorsense", 20]]
             }
@@ -104,7 +104,7 @@ AddSubClass("sorcerer", "rifthopper", {
                 "When I cast a spell that deals damage, I can change its damage type to thunder.",
                 "If the spell imposes a condition on a damaged creature, I can impose deafened instead."
             ]),
-            immune : ["Thunder"]
+            dmgimm : ["Thunder"]
         },
         "subclassfeature14.1" : {
             name : "Familiar Locations",
