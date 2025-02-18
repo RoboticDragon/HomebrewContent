@@ -8,7 +8,26 @@ SourceList["WSoBP"] = {
     url : "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
     date : "2022/08/09"
 };
-
+RaceList["alseid"] = {
+	regExpSearch : /^((?=.*(hylar|daewar))|((?=.*\b(alseid?)\b)\b)).*$/i,
+	name : "Alseid",
+	sortname : "Alseid",
+	source : [["WSoBP", 12]],
+	plural : "Alseids",
+	size : 3,
+	speed : {
+		walk : { spd : 40, enc : 20 }
+	},
+	languageProfs : ["Common", "Elvish"],
+	vision : [["Darkvision", 60]],
+	weaponProfs : [false, false, ["spears", "shortbows"]],
+	skills : [["stealth"]],
+	age : " reach maturity by the age of 20. They can live well beyond 100 years, but it is unknown just how old they can become.",
+	height : " stand over 6 feet tall")",
+	weight : " weigh around 300 lb",
+	scores : [0, 2, 0, 0, 1, 0],
+	trait : "Alseid (+2 Dexterity, +1 Wisdom)\n\nStonecunning:\n   Whenever I make an Intelligence (History) check related to the origin of stonework, I am considered proficient in the History skill and add double my proficiency bonus to the check, instead of my normal proficiency bonus."
+};
 AddSubClass("sorcerer", "rifthopper", {
     regExpSearch : /^(?=.*(mage|magus|sorcerer|witch))(?=.*(rifthopper)).*$/i,
     subname : "Rifthopper",
