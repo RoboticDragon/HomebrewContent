@@ -25,7 +25,8 @@ AddSubClass("sorcerer", "rifthopper", {
             ]),
             additional : levels.map(function(n) {
                 return (n < 6 ? 5 : n < 15 ? 14 : 20) + " pounds";
-            })
+            }),
+            action : ["action", "Teleport Object"] 
         },
         "subclassfeature1.1" : {
             name : "Shift Space",
