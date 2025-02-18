@@ -142,16 +142,15 @@ AddSubClass("sorcerer", "rifthopper", {
             toNotesPage : [{
 				name : "Rifthopper Teleportation Distance",
 				source : [["WSoBP", 130]],
-				popupName : "Spell Slot Teleportation",
 				note : [
 					"2nd: \t 30ft",
-                    "3rd: \t 60ft",
-                    "4th: \t 120ft",
-                    "5th: \t 240ft",
-                    "6th: \t 480ft",
-                    "7+: \t 960ft" 
+                    			"3rd: \t 60ft",
+                    			"4th: \t 120ft",
+                    			"5th: \t 240ft",
+                    			"6th: \t 480ft",
+                    			"7+: \t 960ft", 
 				]
-			},
-        },
+			}]
+        
     }
 });
