@@ -128,55 +128,8 @@ AddSubClass("sorcerer", "rifthopper", {
                 "If my speed is 0, such as when grappled or restrained, I can't use this feature."
             ])
         },
-        // "subclassfeature1.2" : {
-        //     name : "Reverberating Quintessence",
-        //     source : [["WSoBP", 130]],
-        //     minlevel : 1,
-        //     description : desc([
-        //         "I am immune to the deafened condition and have tremorsense out to 10 feet.",
-        //         "I have advantage on saving throws against effects that deal thunder damage."
-        //     ]),
-        //     savetxt : { 
-        //         text : ["Adv. on saves vs. thunder damage"], 
-        //         immune : ["deafened"] 
-        //     },
-        //     vision : [["Tremorsense", 10]],
-        //     extraname : "Reverberating Quintessence Upgrades",
-        //     choices : ["level 3 upgrade", "level 6 upgrade"],
-        //     "level 3 upgrade" : {
-        //         description : "I gain resistance to thunder damage.",
-        //         dmgres : ["Thunder"]
-        //     },
-        //     "level 6 upgrade" : {
-        //         description : "My tremorsense increases to 20 feet.",
-        //         vision : [["Tremorsense", 20]]
-        //     }
-        // },
-        // "subclassfeature1.3" : {
-        //     name : "Signature Sound",
-        //     source : [["WSoBP", 130]],
-        //     minlevel : 1,
-        //     description : "I can cast Alarm (audible only) once per long rest without a spell slot.",
-        //     spellcastingBonus : {
-        //         name : "Signature Sound",
-        //         spells : ["alarm"],
-        //         selection : ["alarm"],
-        //         times : 1
-        //     },
-        //     usages : 1,
-        //     recovery : "long rest"
-        // },
-        // "subclassfeature6" : {
-        //     name : "Sonic Savant",
-        //     source : [["WSoBP", 130]],
-        //     minlevel : 6,
-        //     description : desc([
-        //         "When I use Metamagic on a spell that deals thunder damage or manipulates sound:",
-        //         "- If it normally costs 1 sorcery point, it now costs 0.",
-        //         "- Other Metamagic costs half (rounded up)."
-        //     ])
-        // },
-        "subclassfeature6.1" : {
+
+        "subclassfeature6" : {
             name : "Tactical Swap",
             source : [["WSoBP", 130]],
             minlevel : 6,
@@ -187,17 +140,7 @@ AddSubClass("sorcerer", "rifthopper", {
             ]),
             action : [["reaction", ""]]
         },
-        // "subclassfeature14" : {
-        //     name : "Sound and Fury",
-        //     source : [["WSoBP", 130]],
-        //     minlevel : 14,
-        //     description : desc([
-        //         "I gain immunity to thunder damage.",
-        //         "When I cast a spell that deals damage, I can change its damage type to thunder.",
-        //         "If the spell imposes a condition on a damaged creature, I can impose deafened instead."
-        //     ]),
-        //     dmgimm : ["Thunder"]
-        // },
+       
         "subclassfeature14" : {
             name : "Familiar Locations",
             source : [["WSoBP", 130]],
@@ -221,15 +164,81 @@ AddSubClass("sorcerer", "rifthopper", {
             ]),
             usages : 1,
             recovery : "long rest"
-        },
-        // "subclassfeature18.1" : {
-        //     name : "Resounding Spellcasting",
-        //     source : [["WSoBP", 130]],
-        //     minlevel : 18,
-        //     description : desc([
-        //         "My thunder cantrips affect creatures even if they succeed on a saving throw.",
-        //         "I can teleport using my full movement and a spell slot, with range based on slot level."
-        //     ])
-        // }
-    }
+        }
+   
+    },
+	AddSubClass("sorcerer", "resonant body", {
+	regExpSearch : /^(?=.*(mage|magus|sorcerer|witch))(?=.*(resonant body | resonant | body)).*$/i,
+    	subname : "Resonant Body",
+    	source : [["WSoBP", 130]],
+    	features : {
+          "subclassfeature1" : {
+              name : "Reverberating Quintessence",
+              source : [["WSoBP", 130]],
+              minlevel : 1,
+              description : desc([
+                  "I am immune to the deafened condition and have tremorsense out to 10 feet.",
+                  "I have advantage on saving throws against effects that deal thunder damage."
+              ]),
+              savetxt : { 
+                  text : ["Adv. on saves vs. thunder damage"], 
+                  immune : ["deafened"] 
+              },
+              vision : [["Tremorsense", 10]],
+              extraname : "Reverberating Quintessence Upgrades",
+              choices : ["level 3 upgrade", "level 6 upgrade"],
+              "level 3 upgrade" : {
+                  description : "I gain resistance to thunder damage.",
+                  dmgres : ["Thunder"]
+              },
+              "level 6 upgrade" : {
+                  description : "My tremorsense increases to 20 feet.",
+                  vision : [["Tremorsense", 20]]
+              }
+          },
+          "subclassfeature1.1" : {
+              name : "Signature Sound",
+              source : [["WSoBP", 130]],
+              minlevel : 1,
+              description : "I can cast Alarm (audible only) once per long rest without a spell slot.",
+              spellcastingBonus : {
+                  name : "Signature Sound",
+                  spells : ["alarm"],
+                  selection : ["alarm"],
+                  times : 1
+              },
+              usages : 1,
+              recovery : "long rest"
+          },
+          "subclassfeature6" : {
+              name : "Sonic Savant",
+              source : [["WSoBP", 130]],
+              minlevel : 6,
+              description : desc([
+                  "When I use Metamagic on a spell that deals thunder damage or manipulates sound:",
+                  "- If it normally costs 1 sorcery point, it now costs 0.",
+                  "- Other Metamagic costs half (rounded up)."
+             ])
+         },
+		   "subclassfeature14" : {
+              name : "Sound and Fury",
+              source : [["WSoBP", 130]],
+              minlevel : 14,
+              description : desc([
+                  "I gain immunity to thunder damage.",
+                  "When I cast a spell that deals damage, I can change its damage type to thunder.",
+                  "If the spell imposes a condition on a damaged creature, I can impose deafened instead."
+              ]),
+              dmgimm : ["Thunder"]
+          },
+		       "subclassfeature18" : {
+              name : "Resounding Spellcasting",
+              source : [["WSoBP", 130]],
+              minlevel : 18,
+              description : desc([
+                  "My thunder cantrips affect creatures even if they succeed on a saving throw.",
+                  "I can teleport using my full movement and a spell slot, with range based on slot level."
+              ])
+          }
+	}
 });
