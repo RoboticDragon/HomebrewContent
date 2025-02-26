@@ -8,7 +8,7 @@ SourceList["VSoS"]={
 	date : "2022/12/30" // ! Updated as of 12-30-2022 (Version 1.4)
 };
 
-AddSubClass("sorcerer", "mirrorkin" {
+AddSubClass("sorcerer", "mirrorkin", {
 	regExpSearch : /^(?=.*mirrorkin)(?=.*sorcerer).*$/i,
 	subname : "Mirrorkin",
 	source : ["VSoS", 249],
@@ -64,9 +64,10 @@ minlevel : 6,
         "Any prerequisites (such as brandishing holy symbols, spending ki points, or consuming items) are waived, unless it is a spell or required a spell slot, in which case I must expend the relevant spell slot and any required expensive material components.", 
         "If the ability forces targets to make a saving throw, I can use my sorcerer spell save DC.", 
         "Once I use this ability, I must finish a long rest before I can use it again."
-        ])
-      usages: 1,
-        recovery: "long rest"
+        ]),
+      	
+        recovery: "long rest",
+	usages: 1
         },
 	"subclassfeature18" : {
 	name: "Perfect Duplicate",
