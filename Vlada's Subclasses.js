@@ -44,7 +44,7 @@ AddSubClass("sorcerer", "mirrorkin" {
     "subclassfeature6" : {
     name : "Reflect Magic",
     source : ["VSoS", 249],
-		minlevel : 6,
+minlevel : 6,
     action : ["reaction", "Reflect Magic"],
       description: desc([
       "When a creature casts a spell requiring a saving throw that targets me or includes me in its area of effect,",
@@ -67,6 +67,20 @@ AddSubClass("sorcerer", "mirrorkin" {
         ])
       usages: 1,
         recovery: "long rest"
-        }
-  })
-}
+        },
+	"subclassfeature18" : {
+	name: "Perfect Duplicate",
+	source : ["VSoS", 249],
+	minlevel : 18,
+	description: desc([
+	"I learn the spells Disguise Self and Mirror Image if I do not already know them. I can cast these spells at will without expending a spell slot."
+		]),
+	spellcastingBonus : {
+		name : "Perfect Duplicate",
+		spells : ["Disguise Self", "Mirror Image"],
+		atwill : true
+	},
+	}
+  }
+});
+	
