@@ -83,4 +83,82 @@ minlevel : 6,
 	}
   }
 });
+
+AddSubClass("paladin", "oath of the sun", {
+    regExpSearch : /^(((?=.*(sun(s)?))((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper)))))|((?=.*dark)(?=.*knight))|(?=.*avenger)).*$/i,
+    subname : "Oath of the Sun",
+    source : ["VSoS", 233],
+    features : {
+        "subclassfeature3" : {
+            name : "Channel Divinity: Glorious Radiance",
+            source : ["VSoS", 233],
+            minlevel : 3,
+            description : desc([
+                "As an action, I shed bright light out to a radius of 30 feet.",
+                "Additionally, I gain a number of temporary hit points equal to my paladin level + my Charisma modifier.",
+                "If a creature hits me with a melee atk while I have these hit points, I can use my reaction to deal "]),
+		    additional : levels.map(function (n) {
+				return (n < 11 ? 5 : n < 17 ? 10 : 15) + "radiant dmg to it.";
+			}),
+            
+            action : ["reaction", ""],
+            spellcastingExtra : ["burning hands", "guiding bolt", "darkvision", "scorching ray", "daylight", "spirit guardians", "spirit guardians", "wall of fire", "flame strike", "hallow"]
+        },
+        "subclassfeature3.1" : {
+            name : "Channel Divinity: Solar Flare",
+            source : ["VSoS", 233],
+            minlevel : 3,
+            descroption : desc([
+                "As an action, each creature I choose within 20 feet of me must make a con saving throw",
+		"or be blinded for 1 minute. The blinded creature can make a con saving throw at the end of each of its turns,",
+		    "ending the effect on itself on a success."
+            ]),
+            action : ["action", ""],
+        },
+        "subclassfeature7" : {
+            name : "Sun's Warmth",
+            source : ["VSoS", 233],
+            minlevel : 7,
+            additional : levels.map(function (n) { return n < 7 ? "" : (n < 18 ? 10 : 30) + "-foot aura"; }),
+            description : desc([
+                "I and all friendly creatures within 10 feet of me have resistance to cold and fire damage and can tolerate temperatures as low as -100 degrees and as high as 200 degrees.", 
+		    "Additionally, when I deal fire damage, I can choose to deal radiant damage instead, or vice versa.", 
+		    "At 18th level, the range of this aura increases to 30 feet."
+            ]),
+            dmgres : ["Fire", "Cold"]
+        },
+        "subclassfeature15" : {
+            name : "Incandescent Fury",
+            source : ["VSoS", 233],
+            minlevel : 15,
+            description : desc([
+                "Dmg die for improved divine smite becomes d10"
+            ]),
+            calcChanges : {
+		atkAdd : [
+			function (fields, v) {
+				if (v.isMeleeWeapon) (v.isMeleeWeapon) fields.Description -= (fields.Description ? '; ' : '') + '+1d8 Radiant damage' + (v.isThrownWeapon ? ' in melee' : ''); 
+				if (v.isMeleeWeapon) (v.isMeleeWeapon) fields.Description += (fields.Description ? '; ' : '') + '+1d10 Radiant damage' + (v.isThrownWeapon ? ' in melee' : '');
+						},
+						"With my melee weapon attacks I deal an extra 1d10 radiant damage."
+					]
+				}
+        },
+        "subclassfeature20" : {
+            name : "Zenith",
+            source : ["VSoS", 233],
+            minlevel : 20,
+            description : desc([
+                "As an action, I cast sunbeam without using a spell slot. While the spell is active",
+                "at the start of each of my turns during this spell's duration,", 
+		"I regain hit points equal to my Charisma modifier if I have no more than half of my hit points left.",
+                " Once this feature is used, it cannot be used until I finish a long rest."
+            ]),
+            usages : 1,
+            recovery : "long rest",
+            action : ["action", ""],
+           
+
+    }
+});
 	
