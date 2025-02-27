@@ -21,12 +21,35 @@ AddSubClass("sorcerer", "mirrorkin", {
 				description : desc([ "When a spell targets me or includes me in its area of effect, I can use my reaction to learn it if it affected me.", 
         "I can only learn a spell if I have spell slots of that level. I can learn 2 spells at 1st level, and 2 additional spells at 2nd, 3rd, 4th, and 5th level, for a total of 10 extra spells known.", 
         "These spells do not count against my known sorcerer spells but are treated as sorcerer spells. I can use my action to forget a spell learned this way." ]),
-			  spellcastingBonus : [{
-					name : "Mimic Spells",
+				spellcastingBonus : [{
+					name : "Mimic Spells (1st-level)",
 					"class" : "any",
-					times : levels.map(function (n) {
-						return n < 3 ? 2 : (n < 5 ? 4 : n < 7 ? 6 : n < 9 ? 8 : 10);
-					})
+					level : [1, 1],
+					firstCol : "oncelr"
+				},
+						     {
+					name : "Mimic Spells (2nd-level)",
+					"class" : "any",
+					level : [2, 2],
+					times : levels.map(function (n) { return n < 3 ? 0 : 1; })
+				},
+						     {
+					name : "Mimic Spells (3rd level)",
+					"class" : "any",
+					level : [3, 3],
+					times : levels.map(function (n) { return n < 5 ? 0 : 1; })
+				},
+						     {
+					name : "Mimic Spells (4th level)",
+					"class" : "any",
+					level : [4, 4],
+					times : levels.map(function (n) { return n < 7 ? 0 : 1; })
+				},
+						     {
+					name : "Mimic Spells (5th level)",
+					"class" : "any",
+					level : [5, 5],
+					times : levels.map(function (n) { return n < 9 ? 0 : 1; })
 				}]
 		},
       "subclassfeature1.1" : {
