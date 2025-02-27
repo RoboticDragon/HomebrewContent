@@ -138,7 +138,7 @@ AddSubClass("paladin", "oath of the sun", {
 		atkAdd : [
 			function (fields, v) {
 				//if (v.isMeleeWeapon) (v.isMeleeWeapon) fields.Description -= (fields.Description ? '; ' : '') + '+1d8 Radiant damage' + (v.isThrownWeapon ? ' in melee' : ''); 
-				if (v.isMeleeWeapon) (v.isMeleeWeapon) fields.Description += (fields.Description ? '; ' : '') + '+1d10 Radiant damage' + (v.isThrownWeapon ? ' in melee' : '');
+				if (v.isMeleeWeapon) fields.Description = fields.Description.replace('+1d8 Radiant damage', '+1d10 Radiant damage');
 						},
 						"With my melee weapon attacks I deal an extra 1d10 radiant damage."
 					]
