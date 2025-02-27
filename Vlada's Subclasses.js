@@ -77,8 +77,8 @@ minlevel : 6,
 		]),
 	spellcastingBonus : {
 		name : "Perfect Duplicate",
-		spells : ["Disguise Self", "Mirror Image"],
-		atwill : true
+		spells : ["disguise self", "mirror image"],
+		firstcol : "atwill"
 	},
 	}
   }
