@@ -160,5 +160,6 @@ AddSubClass("paladin", "oath of the sun", {
            
 
     }
+    }
 });
 	
