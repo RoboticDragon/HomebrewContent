@@ -25,31 +25,31 @@ AddSubClass("sorcerer", "mirrorkin", {
 					name : "Mimic Spells (1st-level)",
 					"class" : "any",
 					level : [1, 1],
-					firstCol : "oncelr"
+					times : 2
 				},
 						     {
 					name : "Mimic Spells (2nd-level)",
 					"class" : "any",
 					level : [2, 2],
-					times : levels.map(function (n) { return n < 3 ? 0 : 1; })
+					times : levels.map(function (n) { return n < 3 ? 0 : 2; })
 				},
 						     {
 					name : "Mimic Spells (3rd level)",
 					"class" : "any",
 					level : [3, 3],
-					times : levels.map(function (n) { return n < 5 ? 0 : 1; })
+					times : levels.map(function (n) { return n < 5 ? 0 : 2; })
 				},
 						     {
 					name : "Mimic Spells (4th level)",
 					"class" : "any",
 					level : [4, 4],
-					times : levels.map(function (n) { return n < 7 ? 0 : 1; })
+					times : levels.map(function (n) { return n < 7 ? 0 : 2; })
 				},
 						     {
 					name : "Mimic Spells (5th level)",
 					"class" : "any",
 					level : [5, 5],
-					times : levels.map(function (n) { return n < 9 ? 0 : 1; })
+					times : levels.map(function (n) { return n < 9 ? 0 : 2; })
 				}]
 		},
       "subclassfeature1.1" : {
