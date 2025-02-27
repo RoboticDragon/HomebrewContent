@@ -113,7 +113,7 @@ AddSubClass("paladin", "oath of the sun", {
 		"or be blinded for 1 minute. The blinded creature can make a con saving throw at the end of each of its turns,",
 		    "ending the effect on itself on a success."
             ]),
-            action : ["action", ""],
+            action : ["action", ""]
         },
         "subclassfeature7" : {
             name : "Sun's Warmth",
@@ -156,7 +156,7 @@ AddSubClass("paladin", "oath of the sun", {
             ]),
             usages : 1,
             recovery : "long rest",
-            action : ["action", ""],
+            action : ["action", ""]
            
 
     }
