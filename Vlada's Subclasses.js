@@ -122,12 +122,13 @@ AddSubClass("paladin", "oath of the sun", {
             source : ["VSoS", 233],
             minlevel : 3,
 	additional : levels.map(function (n) {
-		return (n < 11 ? 5 : n < 17 ? 10 : 15) + " radiant dmg to it.";
+		return (n < 11 ? 5 : n < 17 ? 10 : 15) + " radiant dmg";
 	}),
             description : desc([
                 "As an action, I shed bright light out to a radius of 30 feet.",
                 "Additionally, I gain a number of temporary hit points equal to my paladin level + my Charisma modifier.",
-                "If a creature hits me with a melee atk while I have these hit points, I can use my reaction to deal "]),
+                "If a creature hits me with a melee atk while I have these hit points, I can use my reaction to deal 5 radiant dmg to it",
+	    "this increases to 10 damage at 11th level and 15 damage at 17th level."]),
 
             
             action : ["reaction", ""],
