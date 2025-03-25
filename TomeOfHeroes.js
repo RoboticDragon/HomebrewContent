@@ -164,9 +164,11 @@ AddSubClass("sorcerer", "rifthopper", {
             ]),
             usages : 1,
             recovery : "long rest"
-        }
+        },
    
-    },
+    }
+}
+  );
 	AddSubClass("sorcerer", "resonant body", {
 	regExpSearch : /^(?=.*(mage|magus|sorcerer|witch))(?=.*(resonant body | resonant | body)).*$/i,
     	subname : "Resonant Body",
