@@ -1,5 +1,5 @@
 var iFileName = "Tome of Heroes (Kobold Press).js";
-RequiredSheetVersion("13.1.12");
+RequiredSheetVersion("13.2.3");
 
 SourceList["WSoBP"] = {
     name : "Tome of Heroes",
