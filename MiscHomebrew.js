@@ -100,9 +100,9 @@ FeatsList["book of rituals"] = {
 										spellObj.time = (numMinutes + 10) + " min";
 									}
 									return true;
-								},
+								};
 							},
 							"By the Book of Ancient Secrets invocation, I can cast ritual spells from my Book of Shadows. Ritual spell always have a casting time of 10 minutes or more."
-						]
+						],
 					}
 				};
