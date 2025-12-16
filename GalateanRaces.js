@@ -32,4 +32,4 @@ RaceList["spiderfolk"] = {
 		ac : 13,
 		selectNow : true
 	}],
-};
+}
