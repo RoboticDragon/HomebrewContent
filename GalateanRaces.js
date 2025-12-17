@@ -1,7 +1,7 @@
 var iFileName = "GalateanRaces.js";
 SourceList["GalaR"] = {
 name : "GalateanRaces",
-  abbreviation : "GRaces",
+  abbreviation : "GRaces"
 };
 
 RaceList["spiderfolk"] = {
