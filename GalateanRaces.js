@@ -18,7 +18,7 @@ RaceList["spiderfolk"] = {
 	"\u2022 Chitinous Shell: When I'm not wearing armor, my AC is equal to 13 + my dex modifier. I can wear a shield and still gain this benefit." +
 	"\n \u2022 Spider Climb: Climbing speed equal to walking speed. At 3rd level, I can move up, down, and across vertical surfaces and upside down along ceilings, while leaving my hands free." + 
 		"\n \u2022 Extra Arms: I have three additional sets of arms or arm like appendages. These additional arms can lift and manipulate objects weighing up to my Strength ability score but cannot properly wield shields or weapons without the light property." + 
-		"\n \u2022 Eight Eyes: I have darkvision and am resistant to being blinded."
+		"\n \u2022 Eight Eyes: I have darkvision and am resistant to being blinded.",
 	features : {
 		"spider climb" : { // So it doesn't interfere with inherited speeds by useFromPreviousRace
 			name : "Spider Climb",
