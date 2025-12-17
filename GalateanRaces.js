@@ -31,7 +31,7 @@ RaceList["spiderfolk"] = {
 		adv_vs : ["blinded"]
 		},
 	armorOptions : [{
-		regExpSearch : /^(?=.*carapace)(?=.*chameleon).*$/i,
+		regExpSearch : /^(?=.*chitinous)(?=.*shell).*$/i,
 		name : "Chitinous Shell",
 		source : [["GalaR", 8]],
 		ac : 13,
