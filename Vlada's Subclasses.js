@@ -110,7 +110,7 @@ minlevel : 6,
 	},
 	}
   }
-});
+})
 
 AddSubClass("paladin", "oath of the sun", {
     regExpSearch : /^(((?=.*(sun(s)?))((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper)))))|((?=.*dark)(?=.*knight))|(?=.*avenger)).*$/i,
@@ -191,5 +191,84 @@ AddSubClass("paladin", "oath of the sun", {
 
     }
     }
+})
+AddSubClass("fighter", "corsair", {
+	regExpSearch : /corsair/i,
+	subname : "Corsair",
+	source : [["VSoS", 219]],
+	fullname : "Corsair",
+	features : {
+		"subclassfeature3" : {
+			name : "Bonus Proficiency",
+			source : [["VSoS", 219]],
+			minlevel : 3,
+			description : desc([
+				"I gain proficiency with Sleight of Hand"
+			]),
+			choices : ["Skill proficiency: Sleight of Hand"],
+			
+			"skill proficiency: sleight of hand" : {
+				name : "Bonus Proficiency",
+				description : "\n   " + "I gain proficiency with Sleight of Hand"
+			}
+		},
+		"subclassfeature3.1" : {
+			name : "Surprise Attack",
+			source : [["VSoS", 219]],
+			minlevel : 3,
+			description : desc([
+				"I've learned to strike foes when they least expect it.", 
+				"Once per turn, I can deal an extra damage to one creature I hit with an attack roll. The attack must use a finesse or a ranged weapon.", 
+				"I don't need advantage on the attack roll if another enemy of the target is within 5 feet of it, that enemy isn't incapacitated, and I don't have disadvantage on the attack roll." 
+			]),
+			additional : levels.map(function (n) { return n < 3 ? "" : (n < 7 ? 1 : n < 11 ? 2 : n < 15 ? 3 : 4) + "d6 extra damage"; })
+		},
+		"subclassfeature3.2" : {
+			name : "Commandeer",
+			source : [["VSoS", 219]],
+			minlevel : 3,
+			discription : desc(["At 3rd level, I can replace one of my attacks with an attempt to steal an item being carried by another creature.", 
+								"I can't attempt to steal an object that is being work as clothing or armor, nor can you steal an object that is being held in one of the target's hands.", 
+								"Make a Dexterity (Sleight of Hand) check, opposed by the target's AC. On a success, I successfully steal that object. I must have a free hand to use this ability." ]),
+		},
+		"subclassfeature7" : {
+			name : "Three Sheets",
+			source : [["VSoS", 219]],
+			minlevel : 7,
+			description : desc([
+				"Starting at 7th level, whenever I use my Second Wind ability, I can also take the Dash or Disengage action as part of the same bonus action."
+			])
+		},
+		"subclassfeature10" : {
+			name : "Charmed Life",
+			source : [["VSoS", 219]],
+			minlevel : 10,
+			description : desc(["By 10th level, I can saunter into trouble and make it out unscathed tanks to my considerable luck.", 
+			"I can gain advantage on one ability check, attack roll, or saving throw that uses Dexterity or Charisma.", 
+								"Once I use this ability, I can't use it again until I finish a short or long rest."]),
+
+			usages : 1,
+            recovery : "short rest",
+            action : ["action", "Charmed Life"]
+		},
+		"subclassfeature15" : {
+			name : "Slippery Positioning",
+			source : [["VSoS", 219]],
+			minlevel : 15,
+			description : desc([
+				"Starting at 15th level, whenever a hostile creature that I can see within 60 feet moves, I can move 5 feet without using your reaction or provoking opportunity attacks.", 
+				"On each round, I can use this ability a number of times equal to my Dexterity modifier."
+			])
+		},
+		"subclassfeature18" : {
+			name : "Untouchable Swordsman",
+			source : [["VSoS", 219]],
+			minlevel : 18,
+			description : desc([
+				"By 18th level, I am legendary with a cutlass.", 
+				"Whenever I hit a creature with my Surprise Attack, the target has disadvantage on attack rolls against me until the start of my next turn."
+			])
+		}
+	}
 });
 	
