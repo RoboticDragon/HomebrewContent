@@ -205,7 +205,7 @@ AddSubClass("fighter", "corsair", {
 			description : desc([
 				"I gain proficiency with Sleight of Hand"
 			]),
-			choices : ["Skill proficiency: Sleight of Hand"],
+			skills : ["sleight of hand"],
 			
 			"skill proficiency: sleight of hand" : {
 				name : "Bonus Proficiency",
