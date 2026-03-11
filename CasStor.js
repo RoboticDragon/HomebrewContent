@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magic Item Test</title>
-</head>
-<body>
-    <script>
-        const SourceList = {};
-        const MagicItemsList = {};
 
         SourceList["CAS:STOR"] = {
             name: "Cassandra's Story Homebrew",
@@ -79,10 +68,3 @@
                 }
             }
         };
-
-        // Log to check for errors
-        console.log(SourceList);
-        console.log(MagicItemsList);
-    </script>
-</body>
-</html>
