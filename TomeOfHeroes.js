@@ -242,5 +242,88 @@ AddSubClass("sorcerer", "rifthopper", {
                   "I can teleport using my full movement and a spell slot, with range based on slot level."
               ])
           }
-	}
+	},
+	AddSubClass("paladin", "oath of the elements", {
+    regExpSearch: /^(((?=.*(elements|element))((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper)))))|((?=.*(safeguarding|safe|guard))(?=.*(knight|fighter|warrior|warlord|trooper)))).*$/i,
+    subname: "Oath of the Elements",
+    source: ["OoSG", 4],
+    features: {
+        "subclassfeature3": {
+            name: "Channel Divinity: Abjure the Otherworldly",
+            source: ["WSoBP", 4],
+            minlevel: 3,
+            description: desc([
+                "As an action, I present my holy symbol and recite ancient edicts from when the elements ruled the world.", 
+			"Each elemental or fiend that can see or hear me within 30 feet must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes damage.",
+			"A turned creature must spend its turns trying to move as far away from me as it can, and it can’t willingly move to a space within 30 feet of me.", 
+			"It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.",
+            ]),
+            action: ["action", ""],
+            spellcastingExtra: ["burning hands", "thunderwave", "acid arrow", "flaming sphere", "call lightning", "protection from energy", "conjure minor elementals", "ice storm", "conjure elemental", "wall of stone"],
+        },
+        "subclassfeature3.1": {
+            name: "Channel Divinity: Elemental Strike",
+            source: ["WSoBP", 4],
+            minlevel: 3,
+            description: desc([
+                "As a bonus action, I can use my Channel Divinity to magically imbue one weapon I am holding with the power of the elements. Choose air, earth, fire, or water.", 
+				"For 1 minute, I gain a bonus to damage rolls equal to my Charisma modifier (minimum of +1) on attacks made with the weapon.", 
+				"The type of damage is based on the element I chose: lightning or thunder (air), acid (earth), fire (fire), or cold (water).", 
+				"While my weapon is imbued with an element, I can choose to deal its damage type instead of radiant damage when I use my Divine Smite.",
+				"I can end this effect on my turn as part of any other action. If I am no longer holding or carrying this weapon, or if I fall unconscious, this effect ends.",
+            ]),
+            action: ["bonus action", ""]
+        },
+        "subclassfeature7": {
+            name: "Aura of Resistance",
+            source: ["WSoBP", 4],
+            minlevel: 7,
+            description: desc([
+                "While not incapacitated, creatures of my choice within range and I gain benefits:",
+                "First time I or a friendly creature within range would take damage from a weapon attack",
+                "Between my turn and the start of my next turn, the target resists non-magical bludgeoning, piercing and slashing",
+                "Additionally, each friendly creature within range has advantage on death saving throws",
+            ]),
+            additional: levels.map(function (n) {
+                return (n < 7 ? "" : (n < 18 ? "10-foot aura" : "30-foot aura, resistance to all B/P/S damage"));
+            })
+        },
+        "subclassfeature15": {
+            name: "Battlefield Controller",
+            source: ["OoSG", 4],
+            minlevel: 15,
+            description: desc([
+                "I cannot be shoved. If a hostile creature within 10 ft of me moves more than 10 feet away,",
+                "I can use my reaction to move up to 10 feet and make an attack against the creature",
+            ]),
+            action: ["reaction", ""]
+        },
+        "subclassfeature20": {
+            name: "Redoubtable Defender",
+            source: ["OoSG", 4],
+            minlevel: 20,
+            description: desc([
+                "As an action, I touch a creature or structure and for 1 hour gain benefits:",
+                " \u2022 See third page notes section"
+            ]),
+            toNotesPage: [{
+                name: "Redoubtable Defender Benefits",
+                popupName: "Oath of Safeguarding: Redoubtable Defender",
+                page3notes: true,
+                note: [
+                    " \u2022 I know if my charge is wounded/damaged or experiencing a strong emotion",
+                    " \u2022 As an action, I can teleport to an unoccupied space 5ft within my charge's location",
+                    " \u2022 If the charge is a structure, I can teleport to any uncooccupied space within the structure",
+                    " \u2022 I am immune to spells and effects that would charm me or otherwise influence me to harm my charge,",
+                    " \u2022 If charge is a creature within 5ft of me, it is immune to nonmagical B/P/S damage and has adv on saving throws",
+                    " \u2022 As an action, I can create a barrier similar to wall of force for 1 minute to protect my charge",
+                    " \u2022 The wall can be a hemispherical dome or sphere with a radius of up to 5ft or four 10 ft by 10 ft panels",
+                    " \u2022 If my charge is a structure, the barrier can cut through portions without harming it",
+                ]
+            }],
+            recovery: "long rest",
+            usages: 1,
+            action: ["action", ""]
+        }
+    }
 });
