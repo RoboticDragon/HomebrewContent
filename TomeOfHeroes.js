@@ -279,51 +279,50 @@ AddSubClass("sorcerer", "rifthopper", {
             source: ["WSoBP", 4],
             minlevel: 7,
             description: desc([
-                "While not incapacitated, creatures of my choice within range and I gain benefits:",
-                "First time I or a friendly creature within range would take damage from a weapon attack",
-                "Between my turn and the start of my next turn, the target resists non-magical bludgeoning, piercing and slashing",
-                "Additionally, each friendly creature within range has advantage on death saving throws",
+                "Beginning at 7th level, my power over the elements forms a magical ward around me.", 
+				"Choose acid, cold, fire, lightning, or thunder damage when I finish a short or long rest.", 
+				"I and friendly creatures within 10 feet of me have resistance to damage of this type. When I reach 18th level in this class, the range of this aura increases to 30 feet.",
             ]),
             additional: levels.map(function (n) {
-                return (n < 7 ? "" : (n < 18 ? "10-foot aura" : "30-foot aura, resistance to all B/P/S damage"));
+                return (n < 7 ? "" : (n < 18 ? "10-foot aura" : "30-foot aura, resistance to chosen elemental damage"));
             })
         },
         "subclassfeature15": {
-            name: "Battlefield Controller",
+            name: "Elemental Companion",
             source: ["OoSG", 4],
             minlevel: 15,
             description: desc([
-                "I cannot be shoved. If a hostile creature within 10 ft of me moves more than 10 feet away,",
-                "I can use my reaction to move up to 10 feet and make an attack against the creature",
+                "As an action, you can summon an elemental of challenge rating 2 or lower, which appears in an unoccupied space you can see within 30 feet of you.", 
+				"The elemental is friendly to you and your companions, and it obeys any verbal commands you issue to it. If you don’t issue any commands to it, it defends itself from hostile creatures but otherwise takes no actions. 
+				"It rolls its own initiative and has its own turns in combat. You can have only one elemental companion at a time. If you summon a new one, the previous one disappears.", 
+				"In addition, you can’t have a creature magically bound to you or your service, such as through the conjure elemental or dominate person spells or similar magic, while you have an elemental companion.", 
+				"The elemental continues to serve you until you dismiss it as a bonus action or it is reduced to 0 hit points. Once you summon an elemental companion, you can’t summon another one until you finish a long rest.",
             ]),
-            action: ["reaction", ""]
+            action: ["action", ""]
         },
         "subclassfeature20": {
-            name: "Redoubtable Defender",
+            name: "Elemental Champion",
             source: ["OoSG", 4],
             minlevel: 20,
             description: desc([
-                "As an action, I touch a creature or structure and for 1 hour gain benefits:",
+                "As a bonus action, I can manifest the unchained power of the elements for 1 minute and gain benefits:",
                 " \u2022 See third page notes section"
             ]),
             toNotesPage: [{
-                name: "Redoubtable Defender Benefits",
-                popupName: "Oath of Safeguarding: Redoubtable Defender",
+                name: "Elemental Champion Benefits",
+                popupName: "Oath of the Elements: Elemental Champion",
                 page3notes: true,
                 note: [
-                    " \u2022 I know if my charge is wounded/damaged or experiencing a strong emotion",
-                    " \u2022 As an action, I can teleport to an unoccupied space 5ft within my charge's location",
-                    " \u2022 If the charge is a structure, I can teleport to any uncooccupied space within the structure",
-                    " \u2022 I am immune to spells and effects that would charm me or otherwise influence me to harm my charge,",
-                    " \u2022 If charge is a creature within 5ft of me, it is immune to nonmagical B/P/S damage and has adv on saving throws",
-                    " \u2022 As an action, I can create a barrier similar to wall of force for 1 minute to protect my charge",
-                    " \u2022 The wall can be a hemispherical dome or sphere with a radius of up to 5ft or four 10 ft by 10 ft panels",
-                    " \u2022 If my charge is a structure, the barrier can cut through portions without harming it",
+                    " \u2022 I gain the flying speed of an air elemental (90 feet with hover), the Earth Glide trait and burrowing speed of an earth elemental (30 feet), or the swimming speed of a water elemental (90 feet)",
+                    " \u2022 I have resistance to acid, cold, fire, lightning, and thunder damage.",
+                    " \u2022 Any weapon I hold is imbued with the power of the elements. Choose an element, as with Elemental Strike. My weapon deals an extra 3d6 damage to any creature I hit.",
+                    " \u2022 The type of damage is based on the element I chose: lightning or thunder (air), acid (earth), fire (fire), or cold (water).",
+                    " \u2022  While my weapon is imbued with an element, I can choose to deal its damage type in place of radiant damage when I use my Divine Smite.",
                 ]
             }],
             recovery: "long rest",
             usages: 1,
-            action: ["action", ""]
+            action: ["bonus action", ""]
         }
     }
 });
