@@ -246,7 +246,7 @@ AddSubClass("sorcerer", "rifthopper", {
 	AddSubClass("paladin", "oath of the elements", {
     regExpSearch: /^(((?=.*(elements|element))((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper)))))|((?=.*(safeguarding|safe|guard))(?=.*(knight|fighter|warrior|warlord|trooper)))).*$/i,
     subname: "Oath of the Elements",
-    source: ["OoSG", 4],
+    source: ["WSoBP", 4],
     features: {
         "subclassfeature3": {
             name: "Channel Divinity: Abjure the Otherworldly",
@@ -289,7 +289,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature15": {
             name: "Elemental Companion",
-            source: ["OoSG", 4],
+            source: ["WSoBP", 4],
             minlevel: 15,
             description: desc([
                 "As an action, you can summon an elemental of challenge rating 2 or lower, which appears in an unoccupied space you can see within 30 feet of you.", 
@@ -302,7 +302,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature20": {
             name: "Elemental Champion",
-            source: ["OoSG", 4],
+            source: ["WSoBP", 4],
             minlevel: 20,
             description: desc([
                 "As a bonus action, I can manifest the unchained power of the elements for 1 minute and gain benefits:",
@@ -323,6 +323,82 @@ AddSubClass("sorcerer", "rifthopper", {
             recovery: "long rest",
             usages: 1,
             action: ["bonus action", ""]
+        }
+    },
+	AddSubClass("fighter", "legionary", {
+    regExpSearch : /legionary/i,
+    subname : "Legionary",
+    source : ["WSoBP", 39],
+    fullname : "Legionary",
+    features : {
+        "subclassfeature3" : {
+            name : "Bonus Proficiency",
+            source : ["WSoBP", 39],
+            minlevel : 3,
+            description : desc([
+                "I gain proficiency with Insight, Nature or Survival"
+            ]),
+            skillstxt : "Choose one from Insight, Nature or Survival"
+        },
+        "subclassfeature3.1" : {
+            name : "Coordinated Fighting",
+            source : ["WSoBP", 39],
+            minlevel : 3,
+            description : desc([
+                "On my first attack each round, I gain a +1 bonus to the attack and damage rolls if at least one friendly creature is within 5 feet of me."
+            ])
+        },
+		"subclassfeature3.2" : {
+            name : "Move As One",
+            source : ["WSoBP", 39],
+            minlevel : 3,
+            description : desc([
+                "At any point while moving on my turn, I can command a number of willing, friendly creatures within 5 feet of me up to my proficiency bonus to move with me.", 
+				"Each creature that chooses to move with me can use a reaction to move up to its speed alongside me, remaining within 5 feet of me while moving. This movement doesn’t provoke opportunity attacks."
+            ]),
+			usages: "Prof bonus per",
+			recovery: "long rest"
+        },
+        "subclassfeature7" : {
+            name : "Massed Fighting",
+            source : ["WSoBP", 39],
+            minlevel : 7,
+            description : desc([
+                "On my first attack each round, I gain a +1 bonus to the attack and damage rolls for each friendly creature within 5 feet of me, up to a maximum bonus equal to my proficiency bonus.",
+                "When I use my Action Surge feature, each friendly creature within 15 feet of me (except me) gains a +2 bonus to AC and to Dexterity saving throws for 1 minute."
+            ])
+        },
+        "subclassfeature10" : {
+            name : "Vigilance",
+            source : ["WSoBP", 39],
+            minlevel : 10,
+            description : desc([
+                "When a friendly creature I can see is reduced to 0 hit points, I can use my reaction to move up to my speed toward it.", 
+				"This movement doesn’t provoke opportunity attacks."
+            ]),
+            action : [["reaction", "Vigilance"]]
+        },
+        "subclassfeature15" : {
+            name : "Howling Edge of the Razor",
+            source : ["WSoBP", 39],
+            minlevel : 15,
+            description : desc([
+                "I can use a reaction to make a melee attack against a creature that damaged me",
+                "To do so, the creature must be within 5ft of me"
+            ]),
+            action : [["reaction", " (after damage)"]]
+        },
+        "subclassfeature18" : {
+            name : "Teeth of Khasmin",
+            source : ["WSoBP", 39],
+            minlevel : 18,
+            description : desc([
+                "After I use the Attack action, I can use a bonus action to dash",
+                "While dashing this way, attacks against me have disadv. until the start of my next turn"
+            ]),
+            recovery : "short rest",
+            usages : 2,
+            action : [["bonus action", " (after Attack action)"]]
         }
     }
 });
