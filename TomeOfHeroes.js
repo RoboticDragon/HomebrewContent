@@ -1,9 +1,9 @@
 var iFileName = "Tome of Heroes (Kobold Press).js";
 RequiredSheetVersion("13.2.3");
 
-SourceList["WSoBP"] = {
+SourceList["ToH"] = {
     name : "Tome of Heroes",
-    abbreviation : "WSoBP",
+    abbreviation : "ToH",
     group : "Third Party",
     url : "https://koboldpress.com/kpstore/product/tome-of-heroes-for-5th-edition/",
     date : "2022/08/09"
@@ -12,7 +12,7 @@ RaceList["alseid"] = {
 	regExpSearch : /^((?=.*(hylar|daewar))|((?=.*\b(alseid?)\b)\b)).*$/i,
 	name : "Alseid",
 	sortname : "Alseid",
-	source : [["WSoBP", 12]],
+	source : [["ToH", 12]],
 	plural : "Alseids",
 	size : 3,
 	speed : {
@@ -40,7 +40,7 @@ AddSubClass( // this is the function you will be calling to add the variant
 
 		subname : "Grove Warden", //required; the name of the subclass
 
-		source : ["WSoBP"], //required; the source and the page number. "HB" stands for homebrew. See the "Complete SourceList" for an overview of sources that are already defined. Or define a new source using the "Homebrew Syntax - SourceList.js". // This can be an array of arrays to indicate the things appears in multiple sources. For example, if something appears on page 7 of the Elemental Evil Player's Companion and on page 115 of the Sword Coast Adventure Guide, use the following: [["E", 7], ["S", 115]]
+		source : ["ToH"], //required; the source and the page number. "HB" stands for homebrew. See the "Complete SourceList" for an overview of sources that are already defined. Or define a new source using the "Homebrew Syntax - SourceList.js". // This can be an array of arrays to indicate the things appears in multiple sources. For example, if something appears on page 7 of the Elemental Evil Player's Companion and on page 115 of the Sword Coast Adventure Guide, use the following: [["E", 7], ["S", 115]]
 
 		// after defining the above three, you don't need to define anything more, but you can. Defining more stuff will overwrite the entries as they are given in the ClassList. So if you do not need something to be different than the basics of the class (for example, you subclass uses the same spellcasting ability), then you don't need to define it again.
 		// For the syntax of how to define more stuff, look at the ClassList (see "Homebrew Syntax - ClassList.js"). You can define all the same stuff in the same way. The below are a couple of examples:
@@ -54,27 +54,27 @@ AddSubClass( // this is the function you will be calling to add the variant
 		features : { //unlike the other entries, "features" will not delete all the features from the ClassList, but will add to the features in the ClassList. For this to work properly, the feature object has to be named "subclassfeatureX" and not something appropriate for the feature. The below are the features of the purple Dragon Knight
 			"subclassfeatures3" : {
 				name : "Grove Warden Magic",
-				source : ["WSoBP", 109],
+				source : ["ToH", 109],
 				minlevel : 3,
 				description : "\n   " + "Starting at level 3, you learn an additional spell when you reach certain levels in this class." + "\n  " + "This spell counts as a ranger spell for you, but it doesn't count against the number of ranger spells you know.",
 				spellcastingExtra : ["entangle", "branding smite", "speak with plants", "hallucinatory terrain", "animate objects"].concat(new Array(95)).concat("AddToKnown")
 			},
 			"subclassfeature3.1" : {
 				name : "Whispers of the Forest",
-				source : ["WSoBP", 109],
+				source : ["ToH", 109],
 				minlevel : 3,				
 				description : "\n   " + "Starting at level 3, when I use your Primeval Awareness feature while within a forest, I add humanoids to the list of creature types I can sense." + "\n   " + "When sensing humanoids, I know the general direction of the creatures, and I know if a humanoid is solitary, in a small group of up to 5 humanoids, or a pack of more than 5 humanoids.",
 			},
 			"subclassfeature3.2" : {
 				name : "Margreve’s Will",
-				source : ["WSoBP", 109],
+				source : ["ToH", 109],
 				minlevel : 3,
 				description : "\n   " + "Starting at level 3, I can magically draw on the living essence of the land to hamper my foes." + "\n   " + "As a bonus action, choose one creature I can see within 60 feet of me. My next weapon attack against that creature has advantage." + "\n   " + "If that attack hits, the creature’s speed is reduced by 10 feet until the start of my next turn." + "\n   " + "When I reach 11th level in this class, if that attack hits, the creature’s speed is instead halved until the start of my next turn.",
 				action : ["bonus action", "Margreve’s Will"]
 			},
 			"subclassfeature7" : {
 				name : "Intruder’s Bane",
-				source : ["WSoBP", 109],
+				source : ["ToH", 109],
 				minlevel : 7,
 				usages : 1,
 				recovery : "short rest",
@@ -84,14 +84,14 @@ AddSubClass( // this is the function you will be calling to add the variant
 			},
 			"subclassfeature11" : {
 				name : "Wrath of the Forest",
-				source : ["WSoBP", 109],
+				source : ["ToH", 109],
 				minlevel : 11,			
 				description : "\n   " + "Starting at level 11, when I take the Attack action, I can use a bonus action to make a rock, branch, root, or other small object attack a creature within 30 feet of me." + "\n   " + "I am proficient with the attack, it counts as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage, and I add your Dexterity modifier to the attack and damage rolls.\n" + "The damage is of a type appropriate to the surroundings and the damage die is a d8",
 				action : ["bonus action", "Wrath of the Forest"]
 			},
 			"subclassfeature15" : {
 				name : "Living Bulwark",
-				source : ["WSoBP", 109],
+				source : ["ToH", 109],
 				minlevel : 15,
 				description : "\n   " + "When a creature I can see targets me with an attack, I can use my reaction to roll a d8 and add it to my AC against the attack.",
 				action: ["reaction", "Living Bulwark"]
@@ -102,11 +102,11 @@ AddSubClass( // this is the function you will be calling to add the variant
 AddSubClass("sorcerer", "rifthopper", {
     regExpSearch : /^(?=.*(mage|magus|sorcerer|witch))(?=.*(rifthopper)).*$/i,
     subname : "Rifthopper",
-    source : [["WSoBP", 130]],
+    source : [["ToH", 130]],
     features : {
         "subclassfeature1" : {
             name : "Teleport Object",
-            source : [["WSoBP", 130]],
+            source : [["ToH", 130]],
             minlevel : 1,
             description : desc([
                 "I can use an action to teleport a small object that isn’t being worn or carried within 30 feet to my hand.",
@@ -121,7 +121,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature1.1" : {
             name : "Shift Space",
-            source : [["WSoBP", 130]],
+            source : [["ToH", 130]],
             minlevel : 1,
             description : desc([
                 "Once per turn, I can spend movement up to half my speed to teleport that distance.",
@@ -131,7 +131,7 @@ AddSubClass("sorcerer", "rifthopper", {
 
         "subclassfeature6" : {
             name : "Tactical Swap",
-            source : [["WSoBP", 130]],
+            source : [["ToH", 130]],
             minlevel : 6,
             description : desc([
                 "As a reaction, when a creature I can see within 60 feet starts its turn or is attacked:",
@@ -143,7 +143,7 @@ AddSubClass("sorcerer", "rifthopper", {
        
         "subclassfeature14" : {
             name : "Familiar Locations",
-            source : [["WSoBP", 130]],
+            source : [["ToH", 130]],
             minlevel : 14,
             description : desc([
                 "By spending 1 hour familiarizing myself with a location, I can teleport there later.",
@@ -155,7 +155,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature18" : {
             name : "Dimensional Ambler",
-            source : [["WSoBP", 130]],
+            source : [["ToH", 130]],
             minlevel : 18,
             description : desc([
                 "As an action, I can transport myself and willing creatures to the Astral or Ethereal Plane.",
@@ -172,11 +172,11 @@ AddSubClass("sorcerer", "rifthopper", {
 	AddSubClass("sorcerer", "resonant body", {
 	regExpSearch : /^(?=.*(mage|magus|sorcerer|witch))(?=.*(resonant body | resonant | body)).*$/i,
     	subname : "Resonant Body",
-    	source : [["WSoBP", 130]],
+    	source : [["ToH", 130]],
     	features : {
           "subclassfeature1" : {
               name : "Reverberating Quintessence",
-              source : [["WSoBP", 130]],
+              source : [["ToH", 130]],
               minlevel : 1,
               description : desc([
                   "I am immune to the deafened condition and have tremorsense out to 10 feet.",
@@ -200,7 +200,7 @@ AddSubClass("sorcerer", "rifthopper", {
           },
           "subclassfeature1.1" : {
               name : "Signature Sound",
-              source : [["WSoBP", 130]],
+              source : [["ToH", 130]],
               minlevel : 1,
               description : "I can cast Alarm (audible only) once per long rest without a spell slot.",
               spellcastingBonus : {
@@ -214,7 +214,7 @@ AddSubClass("sorcerer", "rifthopper", {
           },
           "subclassfeature6" : {
               name : "Sonic Savant",
-              source : [["WSoBP", 130]],
+              source : [["ToH", 130]],
               minlevel : 6,
               description : desc([
                   "When I use Metamagic on a spell that deals thunder damage or manipulates sound:",
@@ -224,7 +224,7 @@ AddSubClass("sorcerer", "rifthopper", {
          },
 		   "subclassfeature14" : {
               name : "Sound and Fury",
-              source : [["WSoBP", 130]],
+              source : [["ToH", 130]],
               minlevel : 14,
               description : desc([
                   "I gain immunity to thunder damage.",
@@ -235,7 +235,7 @@ AddSubClass("sorcerer", "rifthopper", {
           },
 		       "subclassfeature18" : {
               name : "Resounding Spellcasting",
-              source : [["WSoBP", 130]],
+              source : [["ToH", 130]],
               minlevel : 18,
               description : desc([
                   "My thunder cantrips affect creatures even if they succeed on a saving throw.",
@@ -246,11 +246,11 @@ AddSubClass("sorcerer", "rifthopper", {
 	AddSubClass("paladin", "oath of the elements", {
     regExpSearch: /^(((?=.*(elements|element))((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper)))))|((?=.*(safeguarding|safe|guard))(?=.*(knight|fighter|warrior|warlord|trooper)))).*$/i,
     subname: "Oath of the Elements",
-    source: ["WSoBP", 4],
+    source: ["ToH", 101],
     features: {
         "subclassfeature3": {
             name: "Channel Divinity: Abjure the Otherworldly",
-            source: ["WSoBP", 4],
+            source: ["ToH", 102],
             minlevel: 3,
             description: desc([
                 "As an action, I present my holy symbol and recite ancient edicts from when the elements ruled the world.", 
@@ -263,7 +263,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature3.1": {
             name: "Channel Divinity: Elemental Strike",
-            source: ["WSoBP", 4],
+            source: ["ToH", 102],
             minlevel: 3,
             description: desc([
                 "As a bonus action, I can use my Channel Divinity to magically imbue one weapon I am holding with the power of the elements. Choose air, earth, fire, or water.", 
@@ -276,7 +276,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature7": {
             name: "Aura of Resistance",
-            source: ["WSoBP", 4],
+            source: ["ToH", 102],
             minlevel: 7,
             description: desc([
                 "Beginning at 7th level, my power over the elements forms a magical ward around me.", 
@@ -289,7 +289,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature15": {
             name: "Elemental Companion",
-            source: ["WSoBP", 4],
+            source: ["ToH", 102],
             minlevel: 15,
             description: desc([
                 "As an action, you can summon an elemental of challenge rating 2 or lower, which appears in an unoccupied space you can see within 30 feet of you.", 
@@ -302,7 +302,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature20": {
             name: "Elemental Champion",
-            source: ["WSoBP", 4],
+            source: ["ToH", 102],
             minlevel: 20,
             description: desc([
                 "As a bonus action, I can manifest the unchained power of the elements for 1 minute and gain benefits:",
@@ -328,12 +328,12 @@ AddSubClass("sorcerer", "rifthopper", {
 	AddSubClass("fighter", "legionary", {
     regExpSearch : /legionary/i,
     subname : "Legionary",
-    source : ["WSoBP", 39],
+    source : ["ToH", 86],
     fullname : "Legionary",
     features : {
         "subclassfeature3" : {
             name : "Bonus Proficiency",
-            source : ["WSoBP", 39],
+            source : ["ToH", 86],
             minlevel : 3,
             description : desc([
                 "I gain proficiency with Insight, Nature or Survival"
@@ -342,7 +342,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature3.1" : {
             name : "Coordinated Fighting",
-            source : ["WSoBP", 39],
+            source : ["ToH", 86],
             minlevel : 3,
             description : desc([
                 "On my first attack each round, I gain a +1 bonus to the attack and damage rolls if at least one friendly creature is within 5 feet of me."
@@ -350,7 +350,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
 		"subclassfeature3.2" : {
             name : "Move As One",
-            source : ["WSoBP", 39],
+            source : ["ToH", 86],
             minlevel : 3,
             description : desc([
                 "At any point while moving on my turn, I can command a number of willing, friendly creatures within 5 feet of me up to my proficiency bonus to move with me.", 
@@ -361,7 +361,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature7" : {
             name : "Massed Fighting",
-            source : ["WSoBP", 39],
+            source : ["ToH", 87],
             minlevel : 7,
             description : desc([
                 "On my first attack each round, I gain a +1 bonus to the attack and damage rolls for each friendly creature within 5 feet of me, up to a maximum bonus equal to my proficiency bonus.",
@@ -370,7 +370,7 @@ AddSubClass("sorcerer", "rifthopper", {
         },
         "subclassfeature10" : {
             name : "Vigilance",
-            source : ["WSoBP", 39],
+            source : ["ToH", 87],
             minlevel : 10,
             description : desc([
                 "When a friendly creature I can see is reduced to 0 hit points, I can use my reaction to move up to my speed toward it.", 
@@ -379,25 +379,22 @@ AddSubClass("sorcerer", "rifthopper", {
             action : [["reaction", "Vigilance"]]
         },
         "subclassfeature15" : {
-            name : "Howling Edge of the Razor",
-            source : ["WSoBP", 39],
+            name : "Tactical Positioning",
+            source : ["ToH", 87],
             minlevel : 15,
             description : desc([
-                "I can use a reaction to make a melee attack against a creature that damaged me",
-                "To do so, the creature must be within 5ft of me"
-            ]),
-            action : [["reaction", " (after damage)"]]
+				"Moving through a hostile creature’s space is not difficult terrain for me, and I can move through a hostile creature’s space even if it is only one size larger or smaller than me.", 
+				"I can’t end your move in a hostile creature’s space."
+            ])
         },
         "subclassfeature18" : {
-            name : "Teeth of Khasmin",
-            source : ["WSoBP", 39],
+            name : "Cooperative Strike",
+            source : ["ToH", 87],
             minlevel : 18,
             description : desc([
-                "After I use the Attack action, I can use a bonus action to dash",
-                "While dashing this way, attacks against me have disadv. until the start of my next turn"
+                "When I use the Attack action and attack with a weapon while at least one friendly creature is within 5 feet of me,", 
+				"I can use a bonus action to make one additional attack with that weapon."
             ]),
-            recovery : "short rest",
-            usages : 2,
             action : [["bonus action", " (after Attack action)"]]
         }
     }
