@@ -295,12 +295,21 @@ AddSubClass("sorcerer", "rifthopper", {
             source: ["ToH", 102],
             minlevel: 15,
             description: desc([
-                "As an action, you can summon an elemental of challenge rating 2 or lower, which appears in an unoccupied space you can see within 30 feet of you.", 
+				"I gain an Elemental Companion:",
+				" \u2022 See third page notes section",
+               
+            ]),
+			toNotesPage: [{
+				name: "Elemental Companion",
+				popupName: "Oath of the Elements: Elemental Companion",
+				note: [
+				 "As an action, you can summon an elemental of challenge rating 2 or lower, which appears in an unoccupied space you can see within 30 feet of you.", 
 				"The elemental is friendly to you and your companions, and it obeys any verbal commands you issue to it. If you don’t issue any commands to it, it defends itself from hostile creatures but otherwise takes no actions.", 
 				"It rolls its own initiative and has its own turns in combat. You can have only one elemental companion at a time. If you summon a new one, the previous one disappears.", 
 				"In addition, you can’t have a creature magically bound to you or your service, such as through the conjure elemental or dominate person spells or similar magic, while you have an elemental companion.", 
 				"The elemental continues to serve you until you dismiss it as a bonus action or it is reduced to 0 hit points. Once you summon an elemental companion, you can’t summon another one until you finish a long rest.",
-            ]),
+					]
+			}],
             action: ["action", ""]
         },
         "subclassfeature20": {
