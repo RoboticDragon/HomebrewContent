@@ -282,9 +282,8 @@ AddSubClass("sorcerer", "rifthopper", {
             source: ["ToH", 102],
             minlevel: 7,
             description: desc([
-                "Beginning at 7th level, my power over the elements forms a magical ward around me.", 
-				"Choose acid, cold, fire, lightning, or thunder damage when I finish a short or long rest.", 
-				"I and friendly creatures within 10 feet of me have resistance to damage of this type. When I reach 18th level in this class, the range of this aura increases to 30 feet.",
+                "Choose acid, cold, fire, lightning, or thunder damage when I finish a short or long rest.", 
+				"I and friendly creatures within 10 feet of me have resistance to damage of this type. At 18th level in this class, the range of this aura increases to 30 ft.",
             ]),
             additional: levels.map(function (n) {
                 return (n < 7 ? "" : (n < 18 ? "10-foot aura" : "30-foot aura, resistance to chosen elemental damage"));
@@ -302,6 +301,7 @@ AddSubClass("sorcerer", "rifthopper", {
 			toNotesPage: [{
 				name: "Elemental Companion",
 				popupName: "Oath of the Elements: Elemental Companion",
+				page3notes: true,
 				note: [
 				 "As an action, you can summon an elemental of challenge rating 2 or lower, which appears in an unoccupied space you can see within 30 feet of you.", 
 				"The elemental is friendly to you and your companions, and it obeys any verbal commands you issue to it. If you don’t issue any commands to it, it defends itself from hostile creatures but otherwise takes no actions.", 
